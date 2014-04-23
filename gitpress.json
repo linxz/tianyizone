@@ -1,7 +1,7 @@
 {
     "docs"      : ["posts"],
     "template"    : "default",
-    "domain_alias" :  ["your.domain"],    
+    "domain_alias" :  ["http://linxz.github.io/tianyizone/"],    
     "perpage"   : 10,
     "order"  : "number",
     "types"     : {
