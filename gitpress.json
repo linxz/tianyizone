@@ -1,8 +1,6 @@
 {
     "docs"      : {"all": "posts"},
-    "template"    : "Tactile",
     "perpage"   : 10,
-    "order"  : "text",
     "types"     : {
         "\\.(md||markdown)$"   : "markdown", 
         "\\.(js||css||json)$"  : "code",
