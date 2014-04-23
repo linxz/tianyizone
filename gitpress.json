@@ -1,5 +1,6 @@
 {
-    "docs"      : {"all": "posts"},
+    "docs"      : ["posts"],
+    "template"  : "tactile",
     "perpage"   : 10,
     "types"     : {
         "\\.(md||markdown)$"   : "markdown", 
@@ -9,7 +10,7 @@
     },
     "title"  : "tianyizone Blog",
     "description" : "tianyizone Blog Description...",
-    "comment"  : {"type":"disqus", "short_name":"linxz"},
+    "comment"  : {"type":"duoshuo", "short_name":"linxz"},
     "friends"  : [
         {
           "name"  : "github",
