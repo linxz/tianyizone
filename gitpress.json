@@ -1,8 +1,8 @@
 {
-    "docs"      : ["posts"],
-    "template"    : "default",
+    "docs"      : {"all": "posts"},
+    "template"    : "Tactile",
     "perpage"   : 10,
-    "order"  : "number",
+    "order"  : "text",
     "types"     : {
         "\\.(md||markdown)$"   : "markdown", 
         "\\.(js||css||json)$"  : "code",
@@ -11,7 +11,7 @@
     },
     "title"  : "tianyizone Blog",
     "description" : "tianyizone Blog Description...",
-    "comment"  : {"type":"disqus", "short_name":"gitpress"},
+    "comment"  : {"type":"disqus", "short_name":"linxz"},
     "friends"  : [
         {
           "name"  : "github",
