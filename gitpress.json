@@ -1,5 +1,6 @@
 {
     "docs"      : ["posts"],
+    "domain_alias" :  ["tianyizone.com"],
     "template"  : "tactile",
     "perpage"   : 10,
     "types"     : {
