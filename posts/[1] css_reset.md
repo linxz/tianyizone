@@ -3,4 +3,4 @@
 
 对于这次这个蛋疼的reset，欢迎大家批评和教育。
 
-[CSS reset](../demo/reset.css)
+[CSS reset](https://github.com/linxz/tianyizone/blob/master/demo/reset.css)
