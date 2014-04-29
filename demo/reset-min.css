@@ -1,0 +1,20 @@
+body, blockquote, dd, dl, figure, form, p, pre, h1, h2, h3, h4, h5, h6 { margin: 0; }
+menu, ul, ol { list-style: none; margin: 0; padding: 0; }
+body { line-height: 1.5; background-color: #FFFFFF; }
+body, h1, h2, h3, h4, h5, h6, input, button, select, textarea { font-size: 23px; }
+input[type="button"], input[type="submit"], input[type="reset"] { font-size: 23px; }
+body, input, button, select, optgroup, option, textarea, pre { font-family: Arial, Roboto, 'Droid Sans', 'Hiragino Sans GB', 'Microsoft YaHei', 'Simsun', STXihei, 'sans-serif'; }
+iframe { background-color: #FFFFFF; vertical-align: middle; }
+a { color: #000000; }
+a:hover { text-decoration: underline; color: #FF0000; }
+img { vertical-align: middle; }
+a img { border: 0 none; }
+fieldset { margin: 0; padding: 0; }
+legend { color: windowtext; }
+button, input.ie6 { overflow: visible; padding: .1em .25em; cursor: pointer; }
+input[type="button"], input[type="submit"], input[type="reset"] { overflow: visible; padding: .1em .25em; cursor: pointer; }
+input[type="text"], select, textarea { background-color: #FFFFFF; }
+select { border: 1px inset; }
+textarea { overflow: auto; vertical-align: text-bottom; *vertical-align: auto; border: 1px solid; resize: vertical; }
+table { border-spacing: 0; }
+td, th, caption { padding: 0; }
