@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>position定位属性_林小志_CSS小工具_linxz.de</title>
+<meta name="keywords" content="css那些事儿,林小志,linxz,林友赛,linxz.de,position,top,left,right,bottom,z-index,opacity,CSS小工具" />
+<meta name="description" content="查看position属性在页面中的特性，嵌套与非嵌套的定位，z-index值的变化，各种定位属性结合时的表现效果" />
+<style type="text/css">
+body,div,h2,dl,dt,dd,select,option,input,label {margin: 0;padding: 0;}
+body {padding: 20px;}
+h2 {width: 100%;height: 30px;margin-bottom: 15px;line-height: 30px;border-bottom: 2px solid #5f9b05}
+dl {clear: left;}
+dd {padding:5px 0 5px 2em;}
+label {padding: 0 5px;}
+input {vertical-align: 3px;}
+.ctrl_box,
+.code_box {float: left;width: 220px;overflow: hidden;margin-right: 10px;}
+.code_box textarea {width: 200px;height: 100px;overflow: hidden;border: 0 none;outline: 0 none;resize: none;}
+.code dd {color: #ff0000;}
+.show_box_wrap {float: left;width: 500px;}
+.show_box_wrap p strong {font-size: 1.2em;color:#ff0000;}
+.show_box {position: relative;width: 500px;height: 400px;overflow: auto; border: 1px dashed #a8a8a8;}
+.box_demo {width: 200px;height: 200px;}
+.box_a {background-color: #ff0000;}
+.box_b {width: 180px;height: 400px;background-color: #0bcd00}
+.box_c {width: 120px;height: 120px;background-color: #00a3ff}
+.box_d {width: 120px;height: 120px;background-color: #da00b9}
+.box_e {width: 120px;height: 120px;background-color: #fff700}
+</style></head>
+<body>
+<div class="ctrl_box" id="ctrl_box">
+	<h2>属性选择：</h2>
+	<dl class="ctrl_type">
+		<dt>操作的模块</dt>
+		<dd>
+			<select id="ctrl_box_num">
+				<option value="" selected="selected">请选择要操作的模块：</option>
+				<option value="box_a">box_A</option>
+				<option value="box_b">box_B</option>
+				<option value="box_c">box_C</option>
+				<option value="box_d">box_D</option>
+				<option value="box_e">box_E</option>
+			</select>
+		</dd>
+		<dt>position:</dt>
+		<dd>
+			<select id="pos_box">
+				<option value="" selected="selected">请选择该模块的定位属性：</option>
+				<option value="static">static</option>
+				<option value="relative">relative</option>
+				<option value="absolute">absolute</option>
+				<option value="fixed">fixed</option>
+			</select>
+		</dd>
+		<dt>top:</dt>
+		<dd><input type="number" step="10" placeholder="0" id="top_v" />px</dd>
+		<dt>left:</dt>
+		<dd><input type="number" step="10" placeholder="0" id="left_v" />px</dd>
+		<dt>bottom:</dt>
+		<dd><input type="number" step="10" placeholder="0" id="bottom_v" />px</dd>
+		<dt>right:</dt>
+		<dd><input type="number" step="10" placeholder="0" id="right_v" />px</dd>
+		<dt>z-index:</dt>
+		<dd><input type="number" placeholder="0" id="zIndex_v" /></dd>
+		<dt>opacity:</dt>
+		<dd>
+			<input type="radio" name="alpha_box" id="alpha_y" /><label for="alpha_y">是</label>
+			<input type="radio" name="alpha_box" id="alpha_n" /><label for="alpha_n">否</label>
+		</dd>
+	</dl>
+</div>
+
+<div class="code_box" id="code_box">
+	<h2>code:</h2>
+	<textarea readonly="readonly"><div>box_A</div>
+<div>box_B
+	<div>box_C</div>
+	<div>box_D</div>
+	<div>box_E</div>
+</div></textarea>
+	<dl class="code">
+		<dt>box_A:</dt>
+		<dd id="code_1"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></dd>
+		<dt>box_B:</dt>
+		<dd id="code_2"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></dd>
+		<dt>box_C:</dt>
+		<dd id="code_3"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></dd>
+		<dt>box_D:</dt>
+		<dd id="code_4"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></dd>
+		<dt>box_E:</dt>
+		<dd id="code_5"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></dd>
+	</dl>
+</div>
+
+<div class="show_box_wrap">
+	<h2>效果：</h2>
+	<p>外层虚线有个<strong>position:relative;</strong>属性</p>
+	<div class="show_box" id="show_box">
+		<div class="box_demo box_a" id="box_1">box_A</div>
+		<div class="box_demo box_b" id="box_2">box_B
+			<div class="box_demo box_c" id="box_3">box_C</div>
+			<div class="box_demo box_d" id="box_4">box_D</div>
+			<div class="box_demo box_e" id="box_5">box_E</div>
+		</div>
+	</div>
+</div>
+
+<script>
+var box_a = document.getElementById("box_a");
+var box_b = document.getElementById("box_b");
+var box_c = document.getElementById("box_c");
+var box_d = document.getElementById("box_d");
+var box_e = document.getElementById("box_e");
+
+var code_1 = document.getElementById("code_1");
+var code_2 = document.getElementById("code_2");
+var code_3 = document.getElementById("code_3");
+var code_4 = document.getElementById("code_4");
+var code_5 = document.getElementById("code_5");
+var code_num;
+
+var box_num = document.getElementById("ctrl_box_num");
+var box_name;
+var box_sel;
+
+var pos_box = document.getElementById("pos_box");
+var pos_name;
+var pos_num;
+
+var top_v = document.getElementById("top_v");
+var right_v = document.getElementById("right_v");
+var bottom_v = document.getElementById("bottom_v");
+var left_v = document.getElementById("left_v");
+var zIndex_v = document.getElementById("zIndex_v");
+
+var alpha_y = document.getElementById("alpha_y");
+var alpha_n = document.getElementById("alpha_n");
+
+window.onload = function() {
+
+	box_num.onchange = function() {
+		box_name = box_num.options[box_num.selectedIndex].value;
+		box_sel = document.getElementById("box_" + box_num.selectedIndex);
+		code_num = document.getElementById("code_" + box_num.selectedIndex);
+		temp = "";
+		pos_box.value = "";
+		top_v.value = "";
+		right_v.value = "";
+		bottom_v.value = "";
+		left_v.value = "";
+		zIndex_v.value = "";
+	}
+	
+	pos_box.onchange = function() {
+		pos_name = pos_box.options[pos_box.selectedIndex].value;
+		if(box_name == undefined ){
+			alert("先选择要操作的模块 ^_^ ");
+			pos_box.options[0].selected = true;
+		}else{
+			box_sel.style.position = pos_name;
+			code_num.children[0].innerHTML = "position:" + pos_name;
+		}
+	}
+	
+	top_v.onblur = function() {
+		if(this.value == 0) {
+			this.value = "";
+		}else{
+			box_sel.style.top = top_v.value + "px";
+			code_num.children[1].innerHTML ="; top:" + top_v.value + "px";
+		}
+	}
+	
+	right_v.onblur = function() {
+		if(this.value == 0) {
+			this.value = "";
+		}else{
+			box_sel.style.right = right_v.value + "px";
+			code_num.children[2].innerHTML ="; right:" + right_v.value + "px";
+		}
+	}
+	
+	bottom_v.onblur = function() {
+		if(this.value == 0) {
+			this.value = "";
+		}else{
+			box_sel.style.bottom = bottom_v.value + "px";
+			code_num.children[3].innerHTML ="; bottom:" + bottom_v.value + "px";
+		}
+	}
+	
+	left_v.onblur = function() {
+		if(this.value == 0) {
+			this.value = "";
+		}else{
+			box_sel.style.left = left_v.value + "px";
+			code_num.children[4].innerHTML ="; left:" + left_v.value + "px";
+		}
+	}
+	
+	zIndex_v.onblur = function() {
+		if(this.value == 0) {
+			this.value = 0;
+		}else{
+			box_sel.style.zIndex = zIndex_v.value;
+			code_num.children[5].innerHTML ="; z-index:" + zIndex_v.value;
+		}
+	}
+	
+	alpha_y.onchange = alpha_y.onclick = function() {
+		box_sel.style.opacity = .5;
+		box_sel.style.filter="alpha(opacity=50)";
+		code_num.children[6].innerHTML ="; filter:alpha(opacity=50); opacity: .5";
+	}
+	
+	alpha_n.onchange = alpha_n.onclick = function() {
+		box_sel.style.opacity = 1;
+		box_sel.style.filter="alpha(opacity=100)";
+		code_num.children[6].innerHTML ="; filter:alpha(opacity=100); opacity: 1";
+	}
+}
+
+</script>
+<div style="position:absolute;right:0;bottom:0;font-size:12px;"><script language="javascript" type="text/javascript" src="http://js.users.51.la/385492.js"></script>
+<noscript><a href="http://www.51.la/?385492" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/385492.asp" style="border:none" /></a></noscript></div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>图片垂直居中_css小工具_小志博客_wwww.linxz.de_css那些事儿</title>
+<meta name="keywords" content="css那些事儿,林小志,linxz,页面仔,网站重构,webrebuild,腾讯,webteam,isd,林友赛,图片垂直居中tabel_cell,图片垂直居中span,可透明的背景颜色转换" />
+<meta name="description" content="林小志个人博客站点，《CSS那些事儿》书籍的作者，专注于页面重构的思维，关注于页面制作中结构的扩展性以及可维护性。" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<style type="text/css">
+* {margin:0;padding:0;}
+body {padding:15px 15px 30px;font:normal 13px/1.5 Tahoma, simsun, Verdana,Lucida, Arial, Helvetica, sans-serif;}
+ul {list-style:none;}
+label {cursor:pointer;}
+label:hover {color:#B50000;border-bottom:1px dashed #A0A0A0;}
+
+.nav {overflow:hidden;padding:10px 0;text-align:center;}
+.nav a {color:#242424;margin-left:8px;}
+.nav a:hover {text-decoration:none;color:#F32600;}
+.nav a.current {font-weight:bold;text-decoration:none;color:#F32600;cursor:default;}
+
+.tips {overflow:hidden;margin-bottom:10px;padding:10px 10px 15px;color:#D2D2D2;border:1px solid #000000;border-radius:8px;background-color:#242424;box-shadow:2px 2px 2px #999999;zoom:1;-moz-transition:all 500ms ease-out;-webkit-transition:all 500ms ease-out;opacity:1;}
+.tips dt {font-size:14px;font-weight:bold;color:#99CC29;}
+.tips dd {padding:2px;text-indent:2em;-moz-transition:all 300ms ease-out;-webkit-transition:all 300ms ease-out;}
+.tips dd:hover {color:#FFFFFF;background-color:#000000;border-radius:5px;}
+.tips dd * {margin:0 3px;}
+.tips dd strong {color:#FFFF00;}
+.tips dd em {font-style:normal;color:#FFFA8E;}
+.tips dd span {color:#CC9502;}
+.tips .close {text-align:right;}
+.tips .close a {color:#EFEFEF;}
+.tips .close a:hover {text-decoration:none;color:#FF0000;}
+.fill_box {overflow:hidden;padding:10px 0 5px;zoom:1;}
+.fill_box dt {font-weight:bold;font-size:14px;}
+.fill_box dd {overflow:hidden;padding:5px 10px;zoom:1;}
+#meta_charset li {float:left;margin-right:15px;}
+#meta_charset li input {vertical-align:-2px;margin-right:4px;}
+#browser_list {width:400px;height:90px;overflow:hidden;zoom:1;}
+#browser_list li {float:left;width:200px;height:22px;overflow:hidden;line-height:22px;margin-bottom:5px;}
+#browser_list li input {width:50px;margin:0 3px;text-align:center;border:1px solid #ABADB3;background-color:#FFFFFF;}
+#browser_list li input:hover {color:#FF0000;background-color:#F5F7FB;}
+</style>
+<script type="text/javascript">
+window.google_analytics_uacct = "UA-494463-3";
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-494463-3']);
+  _gaq.push(['_setDomainName', '.linxz.de']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+<div class="nav"><a href="http://selectors.linxz.de/" title="CSS选择符效果查看，只需要轻轻地点击就可以看到某个选择符在页面中作用的范围" target="_blank">CSS选择符效果查看<a> <a href="triangle.html">边框border制作三角的小工具</a> <a href="middle_01.html">图片垂直居中tabel_cell</a> <a href="middle_02.html" class="current">图片垂直居中span</a> <a href="hex_color.html">可透明的背景颜色转换</a> <a href="about.html">关于</a> <strong style="font-size:14px;"><a href="http://bbs.linxz.de/read.php?tid=10">air本地版本下载</a></strong></div>
+
+<dl class="tips" id="tips">
+	<dt>提示：</dt>
+	<dd>这种方法是利用了一个空的span标签作为垂直居中的钩子</dd>
+	<dd>需要注意的是，如果div标签内的span标签和img标签不在同一行，并且不是紧密写在一起的话，那么就需要在外层的div中添加<strong>font-size:0</strong>；</dd>
+	<dd>添加<strong>font-size:0</strong>主要是考虑部分浏览器会对换行和空格产生一个<em>“字符”</em>做处理</dd>
+	<dd class="close"><a href="###" onclick="close_tips()">关闭提示</a></dd>
+</dl>
+<script type="text/javascript">
+var c_tips = document.getElementById("tips");
+function close_tips(){
+	c_tips.style.height = 0 + "px";
+	c_tips.style.padding = 0 + "px";
+	c_tips.style.border = 0 + "px";
+	c_tips.style.opacity = 0;
+}
+</script>
+<div class="test_box">
+	<span class="hook"></span>
+	<a href="http://blog.linxz.de/css_book/" target="_blank"><img src="book.jpg" alt="" /></a>
+</div>
+
+<div class="fill_box">
+	<dl>
+		<dt>图片外框定义</dt>
+		<dd>
+			<ul id="browser_list">
+				<li><label>外框宽度：<input type="text" name="browser" class="browser" maxlength="4" value="" />px</label></li>
+				<li><label>外框高度：<input type="text" name="browser" class="browser" maxlength="4" value="" />px</label></li>
+				<li><label>边框尺寸：<input type="text" name="browser" class="browser" maxlength="3" value="" />px</label></li>
+				<li><label>边框颜色：#<input type="text" class="browser" value="" id="txtColor" /></label></li>
+				<li><label>边框类型： <select id="border_style">
+					<option value="none">none</option>
+					<option value="solid" selected="selected">solid</option>
+					<option value="dashed">dashed</option>
+					<option value="dotted">dotted</option>
+					<option value="double">double</option>
+					<option value="groove">groove</option>
+					<option value="ridge">ridge</option>
+					<option value="inset">inset</option>
+					<option value="outset">outset</option>
+				</select></li>
+			</ul>
+		</dd>
+	</dl>
+</div>
+
+<div class="xhtml_box">
+	<h3>XHTML代码结构：</h3>
+	<pre style="margin:15px 0;font:100 12px/18px monaco, andale mono, courier new;padding:10px 12px;border:#ccc 1px solid;border-left-width:4px;background-color:#fefefe;box-shadow:0 0 4px #eee;word-break:break-all;word-wrap:break-word;color:#444"><span style="color:#170">&lt;div</span> <span style="color:#00c">class</span>=<span style="color:#a11">"test_box"</span><span style="color:#170">&gt;</span><br>	<span style="color:#170">&lt;span</span> <span style="color:#00c">class</span>=<span style="color:#a11">"hook"</span><span style="color:#170">&gt;</span><span style="color:#170">&lt;/span</span><span style="color:#170">&gt;</span><br>	<span style="color:#170">&lt;a <span style="color:#00c">href</span>=<span style="color:#a11">"http://blog.linxz.de/css_book/"</span> <span style="color:#00c">target</span>=<span style="color:#a11">"_blank"</span>&gt;<span style="color:#170">&lt;img</span> <span style="color:#00c">src</span>=<span style="color:#a11">"book.jpg"</span> <span style="color:#00c">alt</span>=<span style="color:#a11">""</span> <span style="color:#170">/&gt;&lt;/a&gt;</span><br><span style="color:#170">&lt;/div</span><span style="color:#170">&gt;</span></pre>
+</div>
+
+
+<div class="show_box css_box">
+	<h3>CSS代码样式：</h3>
+	<div id="show_browser"></div>
+</div>
+
+
+<script language="javascript">
+window.onload = function(){
+	var show_br = document.getElementById("show_browser");
+	var radio_test = document.getElementsByName('browser');
+	var bor_style = document.getElementById('border_style');
+	var txtColor  = document.getElementById('txtColor');
+	var meta_char = document.getElementById('meta_charset');
+	var val;
+
+	radio_test[0].value = 200;
+	radio_test[1].value = 200;
+	radio_test[2].value = 1;
+
+	bor_style.onchange = function(){
+		val = (bor_style.options[bor_style.selectedIndex].value);
+		browser_sel();
+	}
+
+	function check16(val){
+		val = val.substr(0,6);
+		return /[0-9a-f]{6}/.test(val);
+	}
+
+	function check16_3(val){
+		val = val.substr(0,3);
+		return /[0-9a-f]{3}/.test(val);
+	}
+
+	function browser_sel(){
+		val = (bor_style.options[bor_style.selectedIndex].value);
+		show_br.innerHTML = "<strong>你输入的信息中有错误，检查一下吧！</strong>";
+
+		for(var i = 0; i<radio_test.length; i++){
+			if(radio_test[i].value||radio_test[i].checked){
+				radio_test[i].value = radio_test[i].value.replace(/\D/g,'');
+			}
+		}
+
+		txtColor.value = txtColor.value.replace(/[g-zG-Z]/g,function(i){
+			return "";
+		});
+
+		if(txtColor.value.length &&  !check16(txtColor.value) &&  !check16_3(txtColor.value)){
+			return;
+		}
+		txtColor.value = txtColor.value.substr(0,6)?txtColor.value.substr(0,6):"000000";
+
+		show_br.innerHTML = "<pre style=\"margin:15px 0;font:100 12px/18px monaco, andale mono, courier new;padding:10px 12px;border:#ccc 1px solid;border-left-width:4px;background-color:#fefefe;box-shadow:0 0 4px #eee;word-break:break-all;word-wrap:break-word;color:#444\"><span style=\"color:#170\">.test_box</span> {<span style=\"color:#000\">display</span>:<span style=\"color:#164\">table-cell</span>;<span style=\"color:#000\">width</span>:<span style=\"color:#164\">" + radio_test[0].value + "px</span>;<span style=\"color:#000\">height</span>:<span style=\"color:#164\">" + radio_test[1].value + "px</span>;<span style=\"color:#000\">vertical-align</span>:<span style=\"color:#164\">middle</span>;<span style=\"color:#000\">text-align</span>:<span style=\"color:#164\">center</span>;<br />	*<span style=\"color:#164\">float</span>:<span style=\"color:#164\">left</span>;*<span style=\"color:#164\">font-family</span>:<span style=\"color:#164\">simsun</span>;*<span style=\"color:#164\">font-size</span>:<span style=\"color:#164\">" + radio_test[1].value + "px</span>;*<span style=\"color:#164\">line-height</span>:<span style=\"color:#164\">1</span>;<br />	<span style=\"color:#000\">border</span>:<span style=\"color:#164\">" + radio_test[2].value + "px</span> <span style=\"color:#164\">" + val + "</span> <span style=\"color:#219\">#" + txtColor.value + "</span>;<br />}<br /><span style=\"color:#170\">.test_box</span> <span style=\"color:#170\">img</span> {<span style=\"color:#000\">vertical-align</span>:<span style=\"color:#164\">middle</span>;}</pre>\n\n<style type=\"text/css\">\n.test_box {display:table-cell;width:" + radio_test[0].value + "px;height:" + radio_test[1].value + "px;vertical-align:middle;text-align:center;*float:left;*font-family:simsun;*font-size:" + radio_test[1].value + "px;*line-height:1;border:" + radio_test[2].value + "px " + val + " #" + txtColor.value + ";}\n.test_box img {vertical-align:middle;}</style>";
+
+		show_br.innerHTML = "<pre style=\"margin:15px 0;font:100 12px/18px monaco, andale mono, courier new;padding:10px 12px;border:#ccc 1px solid;border-left-width:4px;background-color:#fefefe;box-shadow:0 0 4px #eee;word-break:break-all;word-wrap:break-word;color:#444\"><span style=\"color:#170\">.test_box</span> {<span style=\"color:#000\">width:</span><span style=\"color:#164\">" + radio_test[0].value + "px</span>;<span style=\"color:#000\">height:</span><span style=\"color:#164\">" + radio_test[1].value + "px</span>;<span style=\"color:#000\">overflow</span>:<span style=\"color:#164\">hidden</span>;<span style=\"color:#000\">text-align:</span>center</span>;<span style=\"color:#000\">font-size:</span><span style=\"color:#164\">0</span>;<span style=\"color:#000\">border</span>:<span style=\"color:#164\">" + radio_test[2].value + "px</span> <span style=\"color:#164\">" + val + "</span> <span style=\"color:#219\">#" + txtColor.value + "</span>;}<br><span style=\"color:#170\">.test_box .hook </span>{<span style=\"color:#000\">display</span>:<span style=\"color:#164\">inline-block</span>;<span style=\"color:#000\">width</span>:<span style=\"color:#164\">0;<span style=\"color:#000\">height</span>:<span style=\"color:#164\">100%</span>;<span style=\"color:#000\">overflow</span>:<span style=\"color:#164\">hidden</span>;<span style=\"color:#000\">margin-left</span>:<span style=\"color:#164\">-1px</span>;<span style=\"color:#000\">font-size</span>:<span style=\"color:#164\">0</span>;<span style=\"color:#000\">line-height</span>:<span style=\"color:#164\">0</span>;<span style=\"color:#000\">vertical-align</span>:<span style=\"color:#164\">middle</span>;}<br><span style=\"color:#170\">.test_box img</span> {<span style=\"color:#000\">vertical-align</span>:<span style=\"color:#164\">middle</span>;<span style=\"color:#000\">border</span>:<span style=\"color:#164\">0 none</span>;}</pre>\n\n<style type=\"text/css\">.test_box {width:" + radio_test[0].value + "px;height:" + radio_test[1].value + "px;overflow:hidden;text-align:center;font-size:0;border:" + radio_test[2].value + "px " + val + " #" + txtColor.value + ";}\n.test_box .hook {display:inline-block;width:0;height:100%;overflow:hidden;margin-left:-1px;font-size:0;line-height:0;vertical-align:middle;}\n.test_box img {vertical-align:middle;border:0 none;}\n</style>";
+	}
+
+
+	browser_sel();
+	var browser_list = document.getElementById('browser_list');
+
+	browser_list.onkeyup = function(e){
+		e=e||window.event;
+		var tag =e.target||e.srcElement;
+		if(tag.tagName=='INPUT'){
+			browser_sel();
+		}
+	}
+	browser_list.onchange = function(e){
+		e=e||window.event;
+		var tag =e.target||e.srcElement;
+		if(tag.tagName=='OPTION'){
+			browser_sel();
+		}
+	}
+	meta_char.onclick = function(e){
+		e=e||window.event;
+		var tag =e.target||e.srcElement;
+		if(tag.tagName=='INPUT'){
+			browser_sel();
+		}
+	}
+}
+</script>
+
+
+<div style="display:none;"><script language="javascript" type="text/javascript" src="http://js.users.51.la/385492.js"></script>
+<noscript><a href="http://www.51.la/?385492" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/385492.asp" style="border:none" /></a></noscript></div>
+
+
+
+</body>
+</html>

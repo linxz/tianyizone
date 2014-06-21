@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<!--
+
+ #是进来看源码的么，别看了，看一个不会写JS的人的JS代码，那是一种罪，一种我的罪；
+ #这个工具只是为了让自己在组内跟实习生讲浮动又懒得用demo时使用的；
+ #所以你看到了这个工具，不会用，我也不会管的，看了代码你要骂我也我不会理睬的；
+ 
+ #谁让这个东西就是一个废物呢！ ^O^
+
+-->
+<head>
+<meta charset="utf-8" />
+<title>float浮动属性_林小志_CSS小工具_linxz.de</title>
+<meta name="keywords" content="css那些事儿,林小志,linxz,林友赛,linxz.de,float,clear,clearfix,:after,浮动,清除浮动,CSS小工具" />
+<meta name="description" content="查看各个元素在浮动与清除浮动之间的关系" />
+<style type="text/css">
+/* reset */
+body,h1,div,dl,dt,dd {padding: 0;margin: 0;}
+body {padding: 10px;font-size: 13px;font-family: Arial, Roboto, 'Droid Sans', 'Hiragino Sans GB', 'Simsun', STXihei, 'sans-serif';background-color: #fff;}
+input {margin-right: 5px;vertical-align: 2px;}
+label {display: block;cursor: pointer;}
+/* global */
+.ctrl_box {position: absolute;top: 10px;left:10px;width: 240px;height: 600px;padding-right: 10px;border-right: 1px dashed #d4d4d4;}
+.main {padding-left: 270px;zoom: 1;}
+.main:after {clear:both;display:block;content:".";height:0;visibility:hidden;font-size:0;line-height:0;}
+/* ctrl box */
+.box_list {zoom: 1;}
+.box_list:after {clear:both;display:block;content:".";height:0;visibility:hidden;font-size:0;line-height:0;}
+.box_list label {float: left;width: 20px;height: 20px;overflow: hidden;margin-right: 10px;text-align: center;line-height: 1.7;background-color: #ff5c5c;border: 2px solid #fff;}
+.box_list label:hover {border-color:#000000}
+.box_list .sel_b {background-color: #8b8bff;}
+.box_list .sel_c {background-color: #84fb84;}
+.box_list .sel_d {background-color: #bbb9b9;}
+.box_list .sel_e {background-color: #77ffff;}
+.box_list label input {float: left;margin-left: -20px;}
+/* ctrl list */
+.ctrl_list {overflow: hidden;margin-top: -15px;zoom: 1;}
+.ctrl_list dt {font-weight: bold;font-size: 15px;padding-top: 10px;}
+.ctrl_list dt span {font-size: 12px;color: #8d8d8d;font-weight: normal;}
+.ctrl_list dd {display: block;overflow: hidden;zoom: 1;}
+.ctrl_list input {float: left;}
+.ctrl_list dd label {clear: left;height: 20px;line-height: 22px;border-bottom: 1px dashed #fff;}
+.ctrl_list dd label:hover {color: #d00000;border-bottom: 1px dashed #919191;}
+.ctrl_list dd strong {color: #ef6c6c;}
+
+/* main box */
+
+/* show box */
+.show_box {margin-bottom: 10px;}
+.show_box div {font-size: 16px;}
+.show_box .box_a {background-color: #ff5c5c;}
+.show_box .box_b {background-color: #8b8bff;}
+.show_box .box_c {background-color: #84fb84;}
+.show_box .box_d {background-color: #bbb9b9;}
+.show_box .box_e {background-color: #77ffff;}
+
+/* css for js */
+.clearfix {zoom: 1;}
+.clearfix:after {clear:both;display:block;content:".";height:0;visibility:hidden;font-size:0;line-height:0;}
+</style>
+</head>
+<body>
+<!-- 效果控制区域 -->
+<div class="ctrl_box" id="ctrl_box">
+	<h2>选择模块</h2>
+	<div class="box_list" id="box_list">
+		<label class="sel_a" title="选择 a box"><input type="radio" value="a" name="box_name" />A</label> <label class="sel_b" title="选择 b box"><input type="radio" value="b" name="box_name" />B</label> <label class="sel_c" title="选择 c box"><input type="radio" value="c" name="box_name" />C</label> <label class="sel_d" title="选择 d box"><input type="radio" value="d" name="box_name" />D</label> <label class="sel_e" title="选择 e box"><input type="radio" value="e" name="box_name" />E</label>
+	</div>
+
+	<h2>控制浮动</h2>
+	<dl class="ctrl_list" id="ctrl_list" style="display:none;">
+		<dt>width: <span>（控制每个模块的宽度）</span></dt>
+		<dd id="width_"><label><input type="radio" name="type_width" value="auto" />width:<strong>auto</strong>;</label> <label><input type="radio" name="type_width" value="200px" />width:<strong>200px</strong>;</label> <label><input type="radio" name="type_width" value="100%" />width:<strong>100%</strong>;</label></dd>
+		<dt>height: <span>（控制每个模块的高度）</span></dt>
+		<dd id="height_"><label><input type="radio" name="type_height" value="auto" />height:<strong>auto</strong>;</label> <label><input type="radio" name="type_height" value="200px" />height:<strong>200px</strong>;</label></dd>
+		<dt>float: <span>（选择每个模块的浮动方式）</span></dt>
+		<dd id="float_"><label><input type="radio" name="type_float" value="right" />float:<strong>right</strong>;</label> <label><input type="radio" name="type_float" value="left" />float:<strong>left</strong>;</label> <label><input type="radio" name="type_float" value="none" />float:<strong>none</strong>;</label></dd>
+		<dt>clear: <span>（选择基于每个模块上的清除浮动的方式，罗列常见三种方式）</span></dt>
+		<dd id="clear_"><label><input type="radio" name="type_clear" value="left" />增加CSS属性中的<strong>clear:left;</strong></label> <label><input type="radio" name="type_clear" value="right" />增加CSS属性中的<strong>clear:right;</strong></label> <label><input type="radio" name="type_clear" value="both" />增加CSS属性中的<strong>clear:both;</strong></label> <br /><label><input type="radio" name="type_clear" value=".clearfix" />增加<strong>.clearfix</strong>类名</label> <label><input type="radio" name="type_clear" value="hidden" />通过<strong>overflow:hidden;</strong>方式闭合自身</label> </dd>
+	</dl>
+</div>
+
+<div class="main">
+	<!-- 代码展示 -->
+	<div class="code_box">
+		<div class="code_html" id="code_html">
+	<pre style="margin:15px 0;font:100 12px/18px monaco, andale mono, courier new;padding:10px 12px;border:#ccc 1px solid;border-left-width:4px;background-color:#fefefe;box-shadow:0 0 4px #eee;word-break:break-all;word-wrap:break-word;color:#444"><span style="color:#170">&lt;div</span> <span style="color:#00c">class</span>=<span style="color:#a11">"<span id="cName_a"></span>"</span> <span style="color:#00c">style</span>=<span style="color:#a11">"<span id="code_a"></span>"</span><span style="color:#170">&gt;</span><br>	a box<br>	<span style="color:#170">&lt;div</span> <span style="color:#00c">class</span>=<span style="color:#a11">"<span id="cName_b"></span>"</span> <span style="color:#00c">style</span>=<span style="color:#a11">"<span id="code_b"></span>"</span><span style="color:#170">&gt;</span>b box<span style="color:#170">&lt;/div</span><span style="color:#170">&gt;</span><br>	<span style="color:#170">&lt;div</span> <span style="color:#00c">class</span>=<span style="color:#a11">"<span id="cName_c"></span>"</span> <span style="color:#00c">style</span>=<span style="color:#a11">"<span id="code_c"></span>"</span><span style="color:#170">&gt;</span>c box<span style="color:#170">&lt;/div</span><span style="color:#170">&gt;</span><br>	<span style="color:#170">&lt;div</span> <span style="color:#00c">class</span>=<span style="color:#a11">"<span id="cName_d"></span>"</span> <span style="color:#00c">style</span>=<span style="color:#a11">"<span id="code_d"></span>"</span><span style="color:#170">&gt;</span>d box<span style="color:#170">&lt;/div</span><span style="color:#170">&gt;</span><br><span style="color:#170">&lt;/div</span><span style="color:#170">&gt;</span><br><span style="color:#170">&lt;div</span> <span style="color:#00c">class</span>=<span style="color:#a11">"<span id="cName_e"></span>"</span> <span style="color:#00c">style</span>=<span style="color:#a11">"<span id="code_e"></span>"</span><span style="color:#170">&gt;</span>e box<span style="color:#170">&lt;/div</span><span style="color:#170">&gt;</span><br></pre>
+		</div>
+	</div>
+	
+	<!-- 效果展示 -->
+	<div class="show_box" id="show_box">
+		<h2>效果展示：</h2>
+		<div class="box_a" id="box_a">
+			a box
+			<div class="box_b" id="box_b">b box</div>
+			<div class="box_c" id="box_c">c box</div>
+			<div class="box_d" id="box_d">d box</div>
+		</div>
+		<div class="box_e" id="box_e">e box</div>
+	</div>
+
+	<script>
+	window.onload = function() {
+		var arr_a = ["","","","","box_a"];
+		var arr_b = ["","","","","box_b"];
+		var arr_c = ["","","","","box_c"];
+		var arr_d = ["","","","","box_d"];
+		var arr_e = ["","","","","box_e"];
+		
+		var box_a = document.getElementById("box_a");
+		var box_b = document.getElementById("box_b");
+		var box_c = document.getElementById("box_c");
+		var box_d = document.getElementById("box_d");
+		var box_e = document.getElementById("box_e");
+		
+		var code_a = document.getElementById("code_a");
+		var code_b = document.getElementById("code_b");
+		var code_c = document.getElementById("code_c");
+		var code_d = document.getElementById("code_d");
+		var code_e = document.getElementById("code_e");
+		
+		var cName_a = document.getElementById("cName_a");
+		cName_a.innerHTML = "box_a";
+		var cName_b = document.getElementById("cName_b");
+		cName_b.innerHTML = "box_b";
+		var cName_c = document.getElementById("cName_c");
+		cName_c.innerHTML = "box_c";
+		var cName_d = document.getElementById("cName_d");
+		cName_d.innerHTML = "box_d";
+		var cName_e = document.getElementById("cName_e");
+		cName_e.innerHTML = "box_e";
+		
+		var ctrl_list_wrap = document.getElementById("ctrl_list");
+		
+		var box_list = document.getElementById("box_list").getElementsByTagName("LABEL");
+		var width_ = document.getElementById("width_").getElementsByTagName("LABEL");
+		var height_ = document.getElementById("height_").getElementsByTagName("LABEL");
+		var float_ = document.getElementById("float_").getElementsByTagName("LABEL");
+		var clear_ = document.getElementById("clear_").getElementsByTagName("LABEL");
+				
+		/* 模块选择 */
+		box_list[0].onmouseup = function() {
+			ctrl_list_wrap.style.display = "block";
+			for(i=0;i<box_list.length;i++) {
+				box_list[i].style.zoom = "1";
+			}
+			this.style.zoom = "2";
+			var box_name = this.getElementsByTagName("INPUT")[0].value;
+			sel_width(arr_a);
+			sel_height(arr_a);
+			sel_float(arr_a);
+			sel_clear(arr_a);
+			run_style(arr_a);
+			clear_check();
+		}
+		box_list[1].onmouseup = function() {
+			ctrl_list_wrap.style.display = "block";
+			for(i=0;i<box_list.length;i++) {
+				box_list[i].style.zoom = "1";
+			}
+			this.style.zoom = "2";
+			var box_name = this.getElementsByTagName("INPUT")[0].value;
+			sel_width(arr_b);
+			sel_height(arr_b);
+			sel_float(arr_b);
+			sel_clear(arr_b);
+			run_style(arr_b);
+			clear_check();
+		}
+		box_list[2].onmouseup = function() {
+			ctrl_list_wrap.style.display = "block";
+			for(i=0;i<box_list.length;i++) {
+				box_list[i].style.zoom = "1";
+			}
+			this.style.zoom = "2";
+			var box_name = this.getElementsByTagName("INPUT")[0].value;
+			sel_width(arr_c);
+			sel_height(arr_c);
+			sel_float(arr_c);
+			sel_clear(arr_c);
+			run_style(arr_c);
+			clear_check();
+		}
+		box_list[3].onmouseup = function() {
+			ctrl_list_wrap.style.display = "block";
+			for(i=0;i<box_list.length;i++) {
+				box_list[i].style.zoom = "1";
+			}
+			this.style.zoom = "2";
+			var box_name = this.getElementsByTagName("INPUT")[0].value;
+			sel_width(arr_d);
+			sel_height(arr_d);
+			sel_float(arr_d);
+			sel_clear(arr_d);
+			clear_check();
+		}
+		box_list[4].onmouseup = function() {
+			ctrl_list_wrap.style.display = "block";
+			for(i=0;i<box_list.length;i++) {
+				box_list[i].style.zoom = "1";
+			}
+			this.style.zoom = "2";
+			var box_name = this.getElementsByTagName("INPUT")[0].value;
+			sel_width(arr_e);
+			sel_height(arr_e);
+			sel_float(arr_e);
+			sel_clear(arr_e);
+			run_style(arr_e);
+			clear_check();
+		}
+		
+		/* 宽度选择 */
+		function sel_width(sw) {
+			width_[0].onmouseup = function() {
+				var width_name = this.getElementsByTagName("INPUT")[0].value;
+				sw[0] = width_name;
+				run_style(sw);
+				return sw;
+			}
+			width_[1].onmouseup = function() {
+				var width_name = this.getElementsByTagName("INPUT")[0].value;
+				sw[0] = width_name;
+				run_style(sw);
+				return sw;
+			}
+			width_[2].onmouseup = function() {
+				var width_name = this.getElementsByTagName("INPUT")[0].value;
+				sw[0] = width_name;
+				run_style(sw);
+				return sw;
+			}
+		}
+		
+		/* 高度选择 */
+		function sel_height(sh) {
+			height_[0].onmouseup = function() {
+				var height_name = this.getElementsByTagName("INPUT")[0].value;
+				sh[1] = height_name;
+				run_style(sh);
+				return sh;
+			}
+			height_[1].onmouseup = function() {
+				var height_name = this.getElementsByTagName("INPUT")[0].value;
+				sh[1] = height_name;
+				run_style(sh);
+				return sh;
+			}
+		}
+		
+		/* 浮动控制 */
+		function sel_float(sf) {
+			float_[0].onmouseup = function() {
+				var float_name = this.getElementsByTagName("INPUT")[0].value;
+				sf[2] = float_name;
+				run_style(sf);
+				return sf;
+			}
+			float_[1].onmouseup = function() {
+				var float_name = this.getElementsByTagName("INPUT")[0].value;
+				sf[2] = float_name;
+				run_style(sf);
+				return sf;
+			}
+			float_[2].onmouseup = function() {
+				var float_name = this.getElementsByTagName("INPUT")[0].value;
+				sf[2] = float_name;
+				run_style(sf);
+				return sf;
+			}
+		}
+		
+		/* 清除浮动选择 */
+		function sel_clear(sc) {
+			clear_[0].onmouseup = function() {
+				var clear_name = this.getElementsByTagName("INPUT")[0].value;
+				sc[3] = clear_name;
+				run_style(sc);
+				return sc;
+			}
+			clear_[1].onmouseup = function() {
+				var clear_name = this.getElementsByTagName("INPUT")[0].value;
+				sc[3] = clear_name;
+				run_style(sc);
+				return sc;
+			}
+			clear_[2].onmouseup = function() {
+				var clear_name = this.getElementsByTagName("INPUT")[0].value;
+				sc[3] = clear_name;
+				run_style(sc);
+				return sc;
+			}
+			clear_[3].onmouseup = function() {
+				var clear_name = this.getElementsByTagName("INPUT")[0].value;
+				sc[3] = clear_name;
+				run_style(sc);
+				return sc;
+			}
+			clear_[4].onmouseup = function() {
+				var clear_name = this.getElementsByTagName("INPUT")[0].value;
+				sc[3] = clear_name;
+				run_style(sc);
+				return sc;
+			}
+		}
+		
+		function clear_check() {
+			for(k=0;k<width_.length;k++){
+				if(width_[k].getElementsByTagName("INPUT")[0].checked == true) {
+					width_[k].getElementsByTagName("INPUT")[0].checked = false;
+				}
+			}
+			for(j=0;j<height_.length;j++){
+				if(height_[j].getElementsByTagName("INPUT")[0].checked == true) {
+					height_[j].getElementsByTagName("INPUT")[0].checked = false;
+				}
+			}
+			for(l=0;l<float_.length;l++){
+				if(float_[l].getElementsByTagName("INPUT")[0].checked == true) {
+					float_[l].getElementsByTagName("INPUT")[0].checked = false;
+				}
+			}
+			for(q=0;q<clear_.length;q++){
+				if(clear_[q].getElementsByTagName("INPUT")[0].checked == true) {
+					clear_[q].getElementsByTagName("INPUT")[0].checked = false;
+				}
+			}
+		}
+		
+		function run_style(run) {
+		
+			var show_w = "";
+			var show_h = "";
+			var show_f = "";
+			var show_c = "";
+			
+			if(run[4] == "box_a") {
+				box_a.style.width = run[0];
+				box_a.style.height = run[1];
+				box_a.style.float = run[2];
+				if(run[0] != ""){
+					show_w = "width: " + run[0] + ";";
+				}
+				if(run[1] != ""){
+					show_h = "height: " + run[1] + ";";
+				}
+				if(run[2] != ""){
+					show_f = "float: " + run[2] + ";";
+				}
+				if(run[3] != ""){
+					show_c = "clear: " + run[3] + ";";
+					cName_a.innerHTML = "box_a";
+					box_a.className = "box_a";
+					box_a.style.overflow = "";
+				}
+				if(run[3] == ".clearfix"){
+					show_c = "";
+					cName_a.innerHTML = "box_a clearfix";
+					box_a.className = "box_a clearfix";
+					box_a.style.overflow = "";
+					box_a.style.clear = "";
+				}
+				if(run[3] == "hidden") {
+					show_c = "overflow: " + run[3] + ";";
+					box_a.style.overflow = run[3];
+					box_a.style.clear = "";
+					cName_a.innerHTML = "box_a";
+					box_a.className = "box_a";
+				}
+				code_a.innerHTML = show_w + show_h + show_f + show_c;
+			}
+			if(run[4] == "box_b") {
+				box_b.style.width = run[0];
+				box_b.style.height = run[1];
+				box_b.style.float = run[2];
+				if(run[0] != ""){
+					show_w = "width: " + run[0] + ";";
+				}
+				if(run[1] != ""){
+					show_h = "height: " + run[1] + ";";
+				}
+				if(run[2] != ""){
+					show_f = "float: " + run[2] + ";";
+				}
+				if(run[3] == "left" || run[3] == "right" || run[3] == "both"){
+					box_b.style.clear = run[3];
+					show_c = "clear: " + run[3] + ";";
+					cName_b.innerHTML = "box_b";
+					box_b.className = "box_b";
+					box_b.style.overflow = "";
+				}
+				if(run[3] == ".clearfix"){
+					show_c = "";
+					cName_b.innerHTML = "box_b clearfix";
+					box_b.className = "box_b clearfix";
+					box_b.style.overflow = "";
+					box_b.style.clear = "";
+				}
+				if(run[3] == "hidden") {
+					show_c = "overflow: " + run[3] + ";";
+					box_b.style.overflow = run[3];
+					box_b.style.clear = "";
+					cName_b.innerHTML = "box_b";
+					box_b.className = "box_b";
+				}
+				code_b.innerHTML = show_w + show_h + show_f + show_c;
+			}
+			if(run[4] == "box_c") {
+				box_c.style.width = run[0];
+				box_c.style.height = run[1];
+				box_c.style.float = run[2];
+				if(run[0] != ""){
+					show_w = "width: " + run[0] + ";";
+				}
+				if(run[1] != ""){
+					show_h = "height: " + run[1] + ";";
+				}
+				if(run[2] != ""){
+					show_f = "float: " + run[2] + ";";
+				}
+				if(run[3] == "left" || run[3] == "right" || run[3] == "both"){
+					box_c.style.clear = run[3];
+					show_c = "clear: " + run[3] + ";";
+					cName_c.innerHTML = "box_c";
+					box_c.className = "box_c";
+					box_c.style.overflow = "";
+				}
+				if(run[3] == ".clearfix"){
+					show_c = "";
+					cName_c.innerHTML = "box_c clearfix";
+					box_c.className = "box_c clearfix";
+					box_c.style.overflow = "";
+					box_c.style.clear = "";
+				}
+				if(run[3] == "hidden") {
+					show_c = "overflow: " + run[3] + ";";
+					box_c.style.overflow = run[3];
+					box_c.style.clear = "";
+					cName_c.innerHTML = "box_c";
+					box_c.className = "box_c";
+				}
+				code_c.innerHTML = show_w + show_h + show_f + show_c;
+			}
+			if(run[4] == "box_d") {
+				box_d.style.width = run[0];
+				box_d.style.height = run[1];
+				box_d.style.float = run[2];
+				if(run[0] != ""){
+					show_w = "width: " + run[0] + ";";
+				}
+				if(run[1] != ""){
+					show_h = "height: " + run[1] + ";";
+				}
+				if(run[2] != ""){
+					show_f = "float: " + run[2] + ";";
+				}
+				if(run[3] == "left" || run[3] == "right" || run[3] == "both"){
+					box_d.style.clear = run[3];
+					show_c = "clear: " + run[3] + ";";
+					cName_d.innerHTML = "box_d";
+					box_d.className = "box_d";
+					box_d.style.overflow = "";
+				}
+				if(run[3] == ".clearfix"){
+					show_c = "";
+					cName_d.innerHTML = "box_d clearfix";
+					box_d.className = "box_d clearfix";
+					box_d.style.overflow = "";
+					box_d.style.clear = "";
+				}
+				if(run[3] == "hidden") {
+					show_c = "overflow: " + run[3] + ";";
+					box_d.style.overflow = run[3];
+					box_d.style.clear = "";
+					cName_d.innerHTML = "box_d";
+					box_d.className = "box_d";
+				}
+				code_d.innerHTML = show_w + show_h + show_f + show_c;
+			}
+			if(run[4] == "box_e") {
+				box_e.style.width = run[0];
+				box_e.style.height = run[1];
+				box_e.style.float = run[2];
+				if(run[0] != ""){
+					show_w = "width: " + run[0] + ";";
+				}
+				if(run[1] != ""){
+					show_h = "height: " + run[1] + ";";
+				}
+				if(run[2] != ""){
+					show_f = "float: " + run[2] + ";";
+				}
+				if(run[3] == "left" || run[3] == "right" || run[3] == "both"){
+					box_e.style.clear = run[3];
+					show_c = "clear: " + run[3] + ";";
+					cName_e.innerHTML = "box_e";
+					box_e.className = "box_e";
+					box_e.style.overflow = "";
+				}
+				if(run[3] == ".clearfix"){
+					show_c = "";
+					cName_e.innerHTML = "box_e clearfix";
+					box_e.className = "box_e clearfix";
+					box_e.style.overflow = "";
+					box_e.style.clear = "";
+				}
+				if(run[3] == "hidden") {
+					show_c = "overflow: " + run[3] + ";";
+					box_e.style.overflow = run[3];
+					box_e.style.clear = "";
+					cName_e.innerHTML = "box_e";
+					box_e.className = "box_e";
+				}
+				code_e.innerHTML = show_w + show_h + show_f + show_c;
+			}
+		}
+	}
+	</script>
+</div>
+<div style="position:absolute;right:0;bottom:0;font-size:12px;"><script language="javascript" type="text/javascript" src="http://js.users.51.la/385492.js"></script>
+<noscript><a href="http://www.51.la/?385492" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/385492.asp" style="border:none" /></a></noscript></div>
+</body>
+</html>

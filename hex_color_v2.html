@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>CSS背景颜色属性值转换_实现背景色透明效果的代码_林小志博客_css小工具_小志博客_wwww.linxz.de_css那些事儿</title>
+<meta name="keywords" content="css那些事儿,林小志,linxz,林友赛,linxz.de,透明背景色,渐变,滤镜" />
+<meta name="description" content="实现各个浏览器中具备良好的透明特性的效果，IE中使用私有滤镜filter，高端浏览器使用CSS3中的rgba属性。林小志的个人博客站点，《CSS那些事儿》书籍的作者，专注于页面重构的思维，关注于页面制作中结构的扩展性以及可维护性。" />
+<style type="text/css">
+body {padding-bottom:35px;font:normal 13px/1.5em "Microsoft YaHei","simsun",Tahoma, simsun, Verdana,Lucida, Arial, Helvetica, sans-serif;}
+
+.nav {overflow:hidden;padding:10px 0;text-align:center;}
+.nav a {color:#242424;margin-left:8px;}
+.nav a:hover {text-decoration:none;color:#F32600;}
+.nav a.current {font-weight:bold;text-decoration:none;color:#F32600;cursor:default;}
+
+.top_tips {position:relative;width:650px;margin:0 auto;padding:10px;color:#272727;border:1px dashed #99CC29;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;background-color:#F0F0F0;zoom:1;}
+.top_tips:after {clear:both;display:block;content:".";height:0;visibility:hidden;font-size:0;line-height:0;}
+.top_tips:hover {color:#000000;border-color:#99CC29;background-color:#E0E0E0;}
+.top_tips:hover h1 {color:#B50000;}
+h1 {text-align:center;font-size:16px;}
+h2 {font-size:14px;}
+p {margin:0;line-height:20px;font-size:12px;}
+label {color:#F32600;}
+label,button {cursor:pointer;}
+input {width:100px;height:18px;text-align:center;font-family:Tahoma;font-size:12px;color:#F32600;}
+textarea {width:650px;height:40px;margin-top:20px;line-height:20px;padding:5px;font-size:13px;font-family:Tahoma;color:#A6CAF0;border:1px solid #FFFFFF;background-color:#272727;}
+#simple {width:200px;height:100px;overflow:hidden;text-align:center;line-height:100px;}
+.wrap {width:660px;overflow:hidden;margin:20px auto 0;zoom:1;}
+#tip {display:none;position:absolute;top:48px;left:10px;width:400px;padding:10px;color:#FFFFFF;background:rgba(39,39,39,0.8);background:#272727\0;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+#tip:after {position:absolute;bottom:-5px;right:185px;width:0;height:0;content:"";display:block;border-top:5px solid #525252;border-top:5px solid #272727\0;border-left:5px solid transparent;border-right:5px solid transparent;}
+#tip_alphe {display:none;position:absolute;top:183px;left:358px;width:200px;padding:10px;color:#FFFFFF;background:rgba(39,39,39,0.8);background:#272727\0;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+#tip_alphe:after {position:absolute;top:-5px;left:35px;width:0;height:0;content:"";display:block;border-bottom:5px solid #525252;border-bottom:5px solid #272727\0;border-left:5px solid transparent;border-right:5px solid transparent;}
+</style>
+<script type="text/javascript">
+window.google_analytics_uacct = "UA-494463-3";
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-494463-3']);
+  _gaq.push(['_setDomainName', '.linxz.de']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+<div class="nav"><a href="http://selectors.linxz.de/" title="CSS选择符效果查看，只需要轻轻地点击就可以看到某个选择符在页面中作用的范围" target="_blank">CSS选择符效果查看<a> <a href="triangle.html">边框border制作三角的小工具</a> <a href="middle_01.html">图片垂直居中tabel_cell</a> <a href="middle_02.html">图片垂直居中span</a> <a href="hex_color.html" class="current">可透明的背景颜色转换</a> <a href="about.html">关于</a> <strong style="font-size:14px;"><a href="http://bbs.linxz.de/read.php?tid=10">air本地版本下载</a></strong></div>
+
+<div class="top_tips">
+	<h1>CSS背景颜色属性值转换</h1>
+
+	<h2>实现背景色透明效果的代码</h2>
+	<p>实现各个浏览器中具备良好的透明特性的效果，IE中使用私有滤镜filter，高端浏览器使用CSS3中的rgba属性。</p>
+	<p>输入十六进制的颜色值以及透明度，自动在IE的过渡滤镜以及CSS3中的rgba属性之间进行十六进制与十进制的换算。</p>
+	<div id="tip" onclick="this.style.display='none'" onmouseout="this.style.display='none'"></div>
+	<div id="tip_alphe" onclick="this.style.display='none'" onmouseout="this.style.display='none'"></div>
+</div>
+<div class="wrap">
+	<label for="color_value">需要透明的颜色十六进制值：#</label><input type="text" value="" id="color_value" maxlength="6" />
+
+	<label for="original">透明度：</label><input type="input" id="original" />
+	<button type="button" onclick="change_10_to_16()">转为16进制的颜色</button>
+	<br />
+	<textarea rows="2" cols="90" id="alpha_style"></textarea>
+</div>
+
+<script type="text/javascript">
+var oOriginal = document.getElementById("original");
+var co_value = document.getElementById("color_value");
+var css_cont = document.getElementById("alpha_style");
+var warn_tip = document.getElementById("tip");
+var warn_tip_a = document.getElementById("tip_alphe");
+
+function change_10_to_16() {
+	var pattern = /^[0-9a-fA-F]{6}$/;
+	var pattern_3 = /^[0-9a-fA-F]{3}$/;
+	var co = co_value.value;
+	var num = Math.floor((Math.floor(oOriginal.value*100)/100)*255);
+	var num_10 = (Math.floor(oOriginal.value*100)/100);
+	var num_change = num.toString(16);
+	var txt='';
+
+	num = parseInt(num);
+
+	if (co.match(pattern) == null){
+		if (co.length == 3){
+			if (co.match(pattern_3) == null){
+				warn_tip.innerHTML = "十六进制是从【0】到【9】以及【a】到【f】组合而成的，再来一次吧！\n如果是十六进制的缩写，是前后相邻的字母可简写成为一个，例如【#FF000FF】可转为【#F0F】\n请检查你的颜色值是否为【三位】或者符合【十六进制的组合方式】。";
+			}else{
+				if (oOriginal.value >=0 && oOriginal.value <= 1){
+					if (num_change.length == 1){
+						num_change = "0" + num_change;
+					}
+					var co_a = co.substring(0, 1);
+					var co_b = co.substring(1, 2);
+					var co_c = co.substring(2, 3);
+					var co_a2 = co_a + co_a;
+					var co_b2 = co_b + co_b;
+					var co_c2 = co_c + co_c;
+					co = co_a2 + co_b2 + co_c2;
+					css_cont.innerHTML = "filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#" + num_change.toUpperCase() + co.toUpperCase() + "', endColorstr='#" + num_change.toUpperCase() + co.toUpperCase() + "');background:rgba(" + parseInt(co_a2,16) + "," + parseInt(co_b2,16) + "," + parseInt(co_c2,16) + "," + num_10 + ");";
+					temp_cont = css_cont.value;
+
+					txt += css_cont.innerHTML;
+
+					if (css_cont.value == "" || css_cont.value != txt){
+						css_cont.value = txt;
+					}
+
+				}else{
+					warn_tip_a.style.display = "block";
+					warn_tip_a.innerHTML = "透明度的值在【0】到【1】之间。";
+				}
+			}
+		}else{
+			warn_tip.style.display = "block";
+			warn_tip.innerHTML = "十六进制是从【0】到【9】以及【a】到【f】组合而成的，再来一次吧！\n如果是十六进制的缩写，是前后相邻的字母可简写成为一个，例如【#FF000FF】可转为【#F0F】\n请检查你的颜色值是否为【三位】或者符合【十六进制的组合方式】。";
+		}
+	}else{
+		if (oOriginal.value >=0 && oOriginal.value <= 1){
+			if (num_change.length == 1){
+				num_change = "0" + String(num_change);
+			}
+			var co_a = co.substring(0, 2);
+			var co_b = co.substring(2, 4);
+			var co_c = co.substring(4, 6);
+			css_cont.innerHTML = "filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#" + num_change.toUpperCase() + co.toUpperCase() + "', endColorstr='#" + num_change.toUpperCase() + co.toUpperCase() + "');background:rgba(" + parseInt(co_a,16) + "," + parseInt(co_b,16) + "," + parseInt(co_c,16) + "," + num_10 + ");";
+			temp_cont = css_cont.value;
+
+			txt += css_cont.innerHTML;
+
+			if (css_cont.value == "" || css_cont.value != txt){
+				css_cont.value = txt;
+			}
+
+
+		}else{
+			warn_tip_a.style.display = "block";
+			warn_tip_a.innerHTML = "透明度的值在【0】到【1】之间。";
+		}
+	}
+}
+
+</script>
+
+<div style="display:none;"><script language="javascript" type="text/javascript" src="http://js.users.51.la/385492.js"></script>
+<noscript><a href="http://www.51.la/?385492" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/385492.asp" style="border:none" /></a></noscript></div>
+</body>
+</html>
