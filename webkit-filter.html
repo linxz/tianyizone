@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>-webkit-filter</title>
+<meta name="keywords" content="林小志,linxz,webkit,-webkit-filter,ctrip,ued" />
+<meta name="description" content="只是一个简单的展示-webkit-filter的小东西，JS部分写的不好，不会写JS，代码很丑，切勿笑话。^O^" />
+<style type="text/css">
+body {margin:0;font:normal 13px/1.5em "MicroSoft Yahei", Tahoma, simsun, Verdana,Lucida, Arial, Helvetica, sans-serif;}
+.tit {position:absolute;width:320px;height:50px;overflow:hidden;margin:0;line-height:50px;font-size:24px;text-indent:25px;border-bottom:1px solid #CCCCCC;background-color:#F0F0F0;}
+.control,
+.shadow_ctrl {float:left;width:270px;overflow:hidden;padding:15px 25px;margin-top:50px;margin-right:10px;border-top:1px solid #FFFFFF;background-color:#F0F0F0;}
+.shadow_ctrl {clear:both;float:left;overflow:hidden;margin:-30px 0 0;border-top:0 none;}
+.control input,
+.shadow_ctrl input {vertical-align:middle;}
+.control span,
+.shadow_ctrl span {padding:0 5px;font-weight:bold;font-size:22px;font-family:Georgia;color:#FF0000;}
+dt {font-weight:bold;}
+#show_pic {margin-left:10px;}
+#show_code {margin:0;}
+dd:last-child {overflow:hidden;padding:10px;margin:10px 0 0;font-family:Georgia;color:#99CC29;background-color:#242424;border-radius:5px;}
+</style>
+</head>
+
+<body>
+<h1 class="tit">-webkit-filter</h1>
+<dl class="control" id="control">
+	<dt>blur</dt>
+	<dd><input type="range" min="0" max="50" id="blur_input_00" value="0" /><span id="blur_value"></span>px</dd>
+	<dt>brightness</dt>
+	<dd><input type="range" min="0" max="100" id="brightness_input_01" value="0" /><span id="brightness_value"></span>%</dd>
+	<dt>contrast</dt>
+	<dd><input type="range" min="0" max="100" id="contrast_input_02" value="0" /><span id="contrast_value"></span>%</dd>
+	<dt>grayscale</dt>
+	<dd><input type="range" min="0" max="100" id="grayscale_input_03" value="0" /><span id="grayscale_value"></span>%</dd>
+	<dt>hue-rotate</dt>
+	<dd><input type="range" min="0" max="360" id="hue-rotate_input_04" value="0" /><span id="hue-rotate_value"></span>deg</dd>
+	<dt>invert</dt>
+	<dd><input type="range" min="0" max="100" id="invert_input_05" value="0" /><span id="invert_value"></span>%</dd>
+	<dt>opacity</dt>
+	<dd><input type="range" min="0" max="100" id="opacity_input_06" value="0" /><span id="opacity_value"></span>%</dd>
+	<dt>saturate</dt>
+	<dd><input type="range" min="0" max="1000" id="saturate_input_07" value="0" /><span id="saturate_value"></span>%</dd>
+	<dt>sepia</dt>
+	<dd><input type="range" min="0" max="100" id="sepia_input_08" value="0" /><span id="sepia_value"></span>%</dd>
+	<dt>drop-shadow</dt>
+	<dd>X:<input type="range" min="-100" max="100" id="shadow_x_input_09" value="0" /><span id="shadow_x_value"></span>px</dd>
+	<dd>Y:<input type="range" min="-100" max="100" id="shadow_y_input_10" value="0" /><span id="shadow_y_value"></span>px</dd>
+	<dd>radius:<input type="range" min="0" max="30" id="shadow_ra_input_11" value="0" /><span id="shadow_ra_value"></span>px</dd>
+	<dd>R:<input type="range" min="0" max="255" id="shadow_r_input_12" value="0" /><span id="shadow_r_value"></span></dd>
+	<dd>G:<input type="range" min="0" max="255" id="shadow_g_input_13" value="0" /><span id="shadow_g_value"></span></dd>
+	<dd>B:<input type="range" min="0" max="255" id="shadow_b_input_14" value="0" /><span id="shadow_b_value"></span></dd>
+	<dd>A:<input type="range" min="0" max="1" step=".05" id="shadow_a_input_15" value="0" /><span id="shadow_a_value"></span></dd>
+	<dd>
+		<p id="show_code"></p>
+	</dd>
+</dl>
+
+<img src="webkit-filter-pic.jpg" alt="一张来自爱·花苑的图片" id="show_pic" />
+
+<script type="text/javascript">
+window.onload = function() {
+	var ctrl_box = document.getElementById("control");
+	var filter_type = document.getElementsByTagName("input",ctrl_box);
+	var filter_value = document.getElementsByTagName("span",ctrl_box);
+
+	var shadow_ctrl = document.getElementById("shadow_ctrl");
+
+	var show_p = document.getElementById("show_pic");
+	var show_code = document.getElementById("show_code");
+
+	var dw = "";
+	var last = "";
+	var resute = new Array();
+	var num = new Array();
+	var s_num = new Array();
+
+	for (var i=0; i<=filter_type.length; i++){
+		filter_value[i].innerHTML = filter_type[i].value;
+		filter_type[i].onchange = function() {
+			var filter_str = this.id.substring(-1, this.id.length - 9);
+			var filter_id = parseInt(this.id.substr(-2,3));
+
+			document.getElementById(filter_str + '_value').innerHTML = this.value;
+			if (filter_str=="blur"){
+				dw = "px";
+			}else if (filter_str=="hue-rotate"){
+				dw = "deg";
+			}else if (filter_str=="shadow_x" || filter_str=="shadow_y" || filter_str=="shadow_ra"){
+				dw = "px";
+			}else if (filter_str=="shadow_r" || filter_str=="shadow_g" || filter_str=="shadow_b" || filter_str=="shadow_a"){
+				dw = "";
+			}else {
+				dw = "%";
+			}
+
+			resute[filter_id] = filter_str + "(" + this.value + dw + ")";
+
+			if (filter_id >= 9){
+				resute[filter_id] = this.value + dw;
+			}
+
+			num[filter_id] = this.value;
+			show_p.setAttribute("style",  "-webkit-filter:" + filter_str + "(" + this.value + dw + ")");
+
+			this.onmousedown = function() {
+				last = "";
+			}
+
+			this.onmouseup = function() {
+				last = "";
+				for (var j=0; j<=filter_type.length; j++){
+					if (resute[j] == undefined){
+						resute[j] = "";
+					}
+					if (resute[j] != undefined && j>=9 && resute[j] != ""){
+						last = "drop-shadow(" + resute[9] + " " + resute[10] + " " + resute[11] + " " + "rgba(" + resute[12] + "," + resute[13] + "," + resute[14] + "," + resute[15] + ")) ";
+
+						show_p.setAttribute("style",  "-webkit-filter: " + last);
+						show_code.innerHTML = "-webkit-filter: " + last;
+					}
+				}
+
+				for (var j=0; j<9; j++){
+					if (resute[j] != undefined && num[j] != 0){
+						last += resute[j] + " ";
+						show_p.setAttribute("style",  "-webkit-filter: " + last);
+						show_code.innerHTML = "-webkit-filter: " + last;
+					}
+				}
+			}
+		}
+	}
+
+}
+</script>
+<div style="position:absolute;bottom:0;right:0;font-size:12px;">
+	<script language="javascript" type="text/javascript" src="http://js.users.51.la/385492.js"></script>
+	<noscript><a href="http://www.51.la/?385492" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/385492.asp" style="border:none" /></a></noscript>
+</div>
+</body>
+</html>

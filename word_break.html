@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>word-break 和 word-wrap 在各个浏览器中的表现效果</title>
+<meta name="keywords" content="word-break,word-wrap,强制换行,css那些事儿,林小志,linxz,页面仔,网站重构,webrebuild,林友赛" />
+<meta name="description" content="word-break 和 word-wrap 在各个浏览器中的表现效果，各个浏览器中对文本强制换行的效果" />
+<style type="text/css">
+hr {clear:both;}
+.detail {display:none;}
+.box {overflow:hidden;zoom:1;}
+h3:hover {background-color:#CBCBCB;cursor:pointer;}
+.word_break:after {clear:both;display:block;content:".";height:0;visibility:hidden;font-size:0;line-height:0;}
+.word_break {float:left;width:200px;margin:10px;padding:10px;font-size:16px;font-family:simsun;border:1px solid #242424;zoom:1;}
+</style>
+<script type="text/javascript">
+window.google_analytics_uacct = "UA-494463-3";
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-494463-3']);
+  _gaq.push(['_setDomainName', '.linxz.de']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+<div class="box" onmouseover="document.getElementById('d1').style.display='none';document.getElementById('d2').style.display='none';">
+	<div class="word_break">文字啊文字，这里其实就是文字，想要更多的文字，那就开始复制……文字啊文字，这里其实就是文字，想要更多的文字，那就开始复制……文字啊文字，这里其实就是文字，想要更多的文字，那就开始复制……假如这里的文字内容是很长很长的话又没有标点符号的话那将会是怎么样的效果呢。结束！</div>
+	<div class="word_break">test text txt word copy now! test texttexttexttexttext txt word copy now! test text txt word copy now! test text txt word copy now! test text txt word copy now! test text txt word copy now! test text txt word copy now! </div>
+	<div class="word_break">assssssssssssssssssssssssssssssssssssssssss333333333412341234adsfadfzxcvzcvdfgfnasdfadzvasdf234234adfvczxcvasdfasdf234adfzszxcvasdfasdf234234234azcvasdfadfasdf234adfasdf</div>
+	<div style="clear:both;" id="show_code"></div>
+</div>
+<hr />
+<h3 onclick="document.getElementById('d1').style.display='block';document.getElementById('d2').style.display='none';" title="点击查看 word-break 的详细说明，来源于CSS手册（苏昱版）">word-break:</h3>
+<div class="detail" id="d1">
+	<ul>
+		<li><strong>normal</strong>  :　 默认值。允许在词间换行 </li>
+		<li><strong>break-all</strong>  :　 该行为与亚洲语言的 <strong>normal</strong> 相同。也允许非亚洲语言文本行的任意字内断开。该值适合包含一些非亚洲文本的亚洲文本 </li>
+		<li><strong>keep-all</strong>  :　 与所有非亚洲语言的 <strong>normal</strong> 相同。对于中文，韩文，日文，不允许字断开。适合包含少量亚洲文本的非亚洲文本 </li>
+	</ul>
+	<dl>
+		<dt>说明：</dt>
+		<dd>
+			<p>设置或检索对象内文本的字内换行行为。尤其在出现多种语言时。</p>
+			<p>对于中文，应该使用 <strong>break-all</strong> 。</p>
+		</dd>
+	</dl>
+</div>
+<input type="button" value="word-break:normal;" id="wb_1" />
+<input type="button" value="word-break:break-all;" id="wb_2" />
+<input type="button" value="word-break:keep-all;" id="wb_3" />
+<h3 onclick="document.getElementById('d1').style.display='none';document.getElementById('d2').style.display='block';" title="点击查看 word-wrap 的详细说明，来源于CSS手册（苏昱版）">word-wrap:</h3>
+<div class="detail" id="d2">
+	<ul>
+		<li><strong>normal</strong>  :　 <strong>默认值</strong>。允许内容顶开指定的容器边界 </li>
+		<li><strong>break-word</strong>  :　 内容将在边界内换行。如果需要，词内换行( <strong>word-break</strong> )也将发生 </li>
+	</ul>
+	<dl>
+		<dt>说明：</dt>
+		<dd>
+			<p>设置或检索当当前行超过指定容器的边界时是否断开转行。</p>
+			<p>此属性仅作用于有布局的对象，如块对象。内联要素要使用该属性，必须先设定对象的 <strong>height</strong> 或 <strong>width</strong> 属性，或者设定 <strong>position</strong> 属性为 <strong>absolute</strong> ，或者设定 <strong>display</strong> 属性为 <strong>block</strong> 。</p>
+		</dd>
+	</dl>
+</div>
+<input type="button" value="word-wrap:normal;" id="ww_1" />
+<input type="button" value="word-wrap:break-word;" id="ww_2" />
+<hr />
+<button type="button" id="clear_all">清除断行样式</button>
+
+
+<script type="text/javascript">
+window.onload = function() {
+	var c_all = document.getElementById("clear_all");
+	var s_1;
+	var s_2;
+	var ww_1 = document.getElementById("ww_1");
+	var ww_2 = document.getElementById("ww_2");
+	var wb_1 = document.getElementById("wb_1");
+	var wb_2 = document.getElementById("wb_2");
+	var wb_3 = document.getElementById("wb_3");
+	var sc = document.getElementById("show_code");
+	var s_1_c;
+	var s_2_c;
+
+
+
+	//清空断行样式
+	c_all.onclick = function() {
+		s_1 = "";
+		s_2 = "";
+		s_1_c = "";
+		s_2_c = "";
+		wb_1.disabled = "";
+		wb_2.disabled = "";
+		wb_3.disabled = "";
+		ww_1.disabled = "";
+		ww_2.disabled = "";
+		sc.innerHTML = ".word_break {float:left;width:200px;margin:10px;padding:10px;font-size:16px;font-family:simsun;border:1px solid #242424;zoom:1;<br /><span style='color:red'>" + s_1_c + "</span><br /><span style='color:blue'>" + s_2_c +"</span><br />}";
+	}
+
+	wb_1.onclick = function() {
+		wb_1.disabled = "disabled";
+		wb_2.disabled = "";
+		wb_3.disabled = "";
+		s_1_c = "word-break:normal;";
+		s_1 = "<style type='text/css'>.word_break {word-break:normal;}</style>";
+		if (s_2_c==undefined){
+			s_2_c = "";
+		}
+		if (s_2==undefined){
+			s_2 = "";
+		}
+		sc.innerHTML = ".word_break {float:left;width:200px;margin:10px;padding:10px;font-size:16px;font-family:simsun;border:1px solid #242424;zoom:1;<br /><span style='color:red'>" + s_1_c + "</span><br /><span style='color:blue'>" + s_2_c +"</span><br />}" + s_1 + s_2;
+	}
+
+	wb_2.onclick = function() {
+		wb_1.disabled = "";
+		wb_2.disabled = "disabled";
+		wb_3.disabled = "";
+		s_1_c = "word-break:break-all;";
+		s_1 = "<style type='text/css'>.word_break {word-break:break-all;}</style>";
+		if (s_2_c==undefined){
+			s_2_c = "";
+		}
+		if (s_2==undefined){
+			s_2 = "";
+		}
+		sc.innerHTML = ".word_break {float:left;width:200px;margin:10px;padding:10px;font-size:16px;font-family:simsun;border:1px solid #242424;zoom:1;<br /><span style='color:red'>" + s_1_c + "</span><br /><span style='color:blue'>" + s_2_c +"</span><br />}" + s_1 + s_2;
+	}
+
+	wb_3.onclick = function() {
+		wb_1.disabled = "";
+		wb_2.disabled = "";
+		wb_3.disabled = "disabled";
+		s_1_c = "word-break:keep-all;";
+		s_1 = "<style type='text/css'>.word_break {word-break:keep-all;}</style>";
+		if (s_2_c==undefined){
+			s_2_c = "";
+		}
+		if (s_2==undefined){
+			s_2 = "";
+		}
+		sc.innerHTML = ".word_break {float:left;width:200px;margin:10px;padding:10px;font-size:16px;font-family:simsun;border:1px solid #242424;zoom:1;<br /><span style='color:red'>" + s_1_c + "</span><br /><span style='color:blue'>" + s_2_c +"</span><br />}" + s_1 + s_2;
+	}
+
+	ww_1.onclick = function() {
+		ww_1.disabled = "disabled";
+		ww_2.disabled = "";
+		s_2_c = "word-wrap:normal;";
+		s_2 = "<style type='text/css'>.word_break {word-wrap:normal;}</style>";
+		if (s_1_c==undefined){
+			s_1_c = "";
+		}
+		if (s_1==undefined){
+			s_1 = "";
+		}
+		sc.innerHTML = ".word_break {float:left;width:200px;margin:10px;padding:10px;font-size:16px;font-family:simsun;border:1px solid #242424;zoom:1;<br /><span style='color:red'>" + s_1_c + "</span><br /><span style='color:blue'>" + s_2_c +"</span><br />}" + s_1 + s_2;
+	}
+
+	ww_2.onclick = function() {
+		ww_1.disabled = "";
+		ww_2.disabled = "disabled";
+		s_2_c = "word-wrap:break-word;";
+		s_2 = "<style type='text/css'>.word_break {word-wrap:break-word;}</style>";
+		if (s_1_c==undefined){
+			s_1_c = "";
+		}
+		if (s_1==undefined){
+			s_1 = "";
+		}
+		sc.innerHTML = ".word_break {float:left;width:200px;margin:10px;padding:10px;font-size:16px;font-family:simsun;border:1px solid #242424;zoom:1;<br /><span style='color:red'>" + s_1_c + "</span><br /><span style='color:blue'>" + s_2_c +"</span><br />}" + s_1 + s_2;
+	}
+
+}
+</script>
+<div style="position:absolute;bottom:0;right:0;font-size:12px;"><script language="javascript" type="text/javascript" src="http://js.users.51.la/385492.js"></script>
+<noscript><a href="http://www.51.la/?385492" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/385492.asp" style="border:none" /></a></noscript></div>
+</body>
+</html>
