@@ -2,62 +2,35 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>css小工具</title>
+<title>CSS小工具</title>
+<link rel="stylesheet" href="css-reset-min.css" />
 <style type="text/css">
-body {font-size:12px;font-family:"microsoft Yahei",Simsun,Arial,"Lucida Grande",tahoma;margin:0;background:#F8F8F8;}
-.box {position:absolute;width:100%;height:70px;top:39%;}
-a {color:#333;text-decoration:none;-moz-transition:color 500ms linear;-webkit-transition:color 500ms linear;}
-a:hover {color:#f00;}
-#nav {display:block;height:30px;overflow:hidden;margin:0 auto 10px;line-height:30px;text-align:center;background:#000000;color:#fff;
-	-moz-animation-name: my_nav;-moz-animation-duration: 500ms;-moz-animation-timing-function: ease-out;
-	-webkit-animation-name: my_nav;-webkit-animation-duration: 500ms;-webkit-animation-timing-function: ease-out; box-shadow:0 3px 3px #333333;
+header {display: block;padding: 10px;background-color: #333;color: #fff;}
+.page_title {font-size: 26px;font-weight: normal;}
+.description {padding-left: .5em;font-size: 14px;line-height: 22px;color: #ababab;}
+.box {padding: 20px;overflow: hidden;}
+.box a {float: left;width: 120px;height: 60px;margin: 5px;line-height: 20px;text-align: center;border: 1px solid #ccc;border-radius: 5px;
+	-webkit-transition: all 200ms linear;
+	-moz-transition: all 200ms linear;
+	-o-transition: all 200ms linear;
+	transition: all 200ms linear;
 }
-@-moz-keyframes my_nav {
-	0% {width:0%;opacity:0;
-		-moz-border-radius:15px;
-		border-radius:15px;
-	}
-	70% {width:10%;
-		-webkit-border-radius:15px;
-		border-radius:15px;
-	}
-	80% {width:40%;}
-	90% {width:70%;}
-	100% {width:100%;opacity:1;
-		-moz-border-radius:0;
-		border-radius:0;
-	}
-}
-@-webkit-keyframes my_nav {
-	0% {width:0%;opacity:0;
-		-webkit-border-radius:15px;
-		border-radius:15px;
-	}
-	70% {width:10%;
-		-webkit-border-radius:15px;
-		border-radius:15px;
-	}
-	80% {width:40%;}
-	90% {width:70%;}
-	100% {width:100%;opacity:1;
-		-webkit-border-radius:0;
-		border-radius:0;
-	}
-}
-
-
-#nav a {color:#fff;}
-#nav a:hover {color:#A8FF00;}
-.page_title {text-align:center;line-height:40px;font-size:14px;}
+.box a:before {display: inline-block;vertical-align: middle;height: 60px;width: 0;margin-right: -1px;overflow: hidden;font-size: 0;line-height: 999em;background-color: red;content: "";}
+.box a:hover {border-color: #FF0000;}
+.box a span {display: inline-block;zoom: 1;vertical-align: middle;}
 </style>
 <base target="_blank" />
 </head>
 
 <body>
-<h1 class="page_title">小志个人博客的CSS小工具引导页</h1>
+<header>
+	<h1 class="page_title">CSS小工具集合</h1>
+	<p class="description">CSS小工具是小志在无聊的时候回想起曾经在工作中所经历所遇到的一些常用的代码，然后而制作的一个快捷小工具。欢迎大家随意使用，如果OK的话，只要保留一个出处链接就OK了。</p>
+	<p class="description">当然，有一些并非是好用的小工具，只不过是自己做测试的一些小demo或者是小玩意而已。</p>
+</header>
 <div class="box">
 	<div id="nav">
-		<a href="css_reset.html" title="自己折腾的一个CSS RESET">CSS reset</a> - <a href="middle_01.html" class="current">图片垂直居中tabel_cell</a> - <a href="middle_02.html">图片垂直居中span</a> - <a href="hex_color.html">可透明的背景颜色转换</a> - <a href="triangle.html" title="用border使用三角形的小工具">边框制作三角</a> - <a href="position_demo.html" title="position示例效果">position示例效果</a> - <a href="float_demo.html" title="float示例效果">float示例效果</a> - <a href="word_break.html" title="word-break效果">word-break效果</a> - <a href="webkit-filter.html" title="webkit内核的filter效果">webkit内核的filter效果</a>
+		<a href="css_reset.html" title="自己折腾的一个CSS RESET"><span>CSS reset</span></a> <a href="middle_01.html" class="current"><span>图片垂直居中tabel_cell</span></a> <a href="middle_02.html"><span>图片垂直居中span</span></a> <a href="hex_color.html"><span>可透明的背景颜色转换 </span></a> <a href="triangle.html" title="用border使用三角形的小工具"><span>边框制作三角</span></a> <a href="position_demo.html" title="position示例效果"><span>position示例效果</span></a> <a href="float_demo.html" title="float示例效果"><span>float示例效果</span></a> <a href="word_break.html" title="word-break效果"><span>word-break效果</span></a> <a href="webkit-filter.html" title="webkit内核的filter效果"><span>webkit内核的filter效果</span></a>
 	</div>
 </div>
 </body>
