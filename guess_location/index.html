@@ -4,17 +4,152 @@
 <meta charset="UTF-8">
 <title>看图猜景点所在地</title>
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, minimal-ui">
+<script src="../jquery-2.1.1.min.js"></script>
+<style>
+* {margin: 0;padding: 0;}
+.wrap {position: relative;z-index: 2;}
+.show_pic_box {position: relative;padding-bottom: 75%;overflow: hidden;border: solid #333;border-width: 2px 0;}
+.show_pic_box img {position: absolute;top: 0;left: 0;width: 100%;min-height: 100%;z-index: 2;}
+.wrap h1 {height: 60px;overflow: hidden;line-height: 60px;text-align: right;padding-right: 10px;font-size: 20px;}
+.tips {position: absolute;top: 45px;left: 10px;padding:1px 8px;line-height: 26px;font-size: 13px;background-color: rgba(255,255,255,.95);z-index: 5;border-radius: 3px;box-shadow: 0 0 2px 1px #333 inset;}
+.tips em {color: #f32600;font-family: Georgia;}
+.btn_box {float: left;width: 100%;padding:20px 10px 0;box-sizing:border-box;}
+.btn_box button {float: left;width: 50%;height: 44px;margin-bottom: -1px;margin-left: -1px;border: 1px solid #fff;font-size: 18px;color: #333;box-sizing:border-box;outline: 0 none;}
+.btn_box button:active {opacity: .8;}
+#btn_a {background-color: #FF697A;}
+#btn_b {background-color: #3D98FF;}
+#btn_c {background-color: #5EBE00;}
+#btn_d {background-color: #FC9720;}
+.url {clear: both;width: 100%;padding: 20px 10px 0;font-size: 12px;word-break:break-all;box-sizing:border-box;}
+
+.bg {position: fixed;top: 0;left: 0;bottom: 0;right: 0;background-repeat: no-repeat;background-position: 0 0;background-size: cover;z-index: 1;opacity: .3;-webkit-filter:blur(8px);}
+
+.share {position: fixed;top: 0;left: 0;right: 0;bottom: 0;overflow: hidden;padding: 20% 20px 0;line-height: 1.8;background-color: #000;color: #fff;z-index: 10;display: none;box-sizing:border-box;}
+.begin_tips {position: relative;z-index: 10;}
+</style>
 </head>
 <body>
-<h1>看图猜景点所在地</h1>
-<p>图片较多，打开较慢，小小娱乐一下，建议在 <strong>wifi</strong> 下玩，浪费流量挺可惜。</p>
-<br><br>
-<hr>
-<br><br>
-<p style="text-align:center;color:red;"><a href="game.html">开始游戏</a></p>
-<div style="display:none;">
-<script language="javascript" type="text/javascript" src="http://js.users.51.la/385492.js"></script>
-<noscript><a href="http://www.51.la/?385492" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/385492.asp" style="border:none" /></a></noscript>
+<div class="begin_tips">
+	<h1>看图猜景点所在地</h1>
+	<p>图片较多，打开较慢，小小娱乐一下，建议在 <strong>wifi</strong> 下玩，浪费流量挺可惜。</p>
+	<br><br>
+	<hr>
+	<br><br>
+	<p style="text-align:center;color:red;"><a href="###" class="start">开始游戏</a></p>
 </div>
+<div class="wrap" style="display:none;">
+	<h1>看图猜景点所在地</h1>
+	
+	<div class="show_pic_box">
+		<div id="img_box"></div>
+	</div>
+	<p class="tips"></p>
+	<div class="btn_box">
+		<button id="btn_a" value="A">A</button>
+		<button id="btn_b" value="B">B</button>
+		<button id="btn_c" value="C">C</button>
+		<button id="btn_d" value="D">D</button>
+	</div>
+	<p class="url">帮助&amp;参考： <a href="" target="_blank"></a></p>
+</div>
+<div class="bg"></div>
+<div class="share"></div>
+<script>
+$(function(){
+	$('.start').click(function(){
+		$('.wrap').show();
+		$('.begin_tips').hide();
+		playgame();
+	});
+	function playgame() {
+
+		var right_num = 0;
+
+		var num_array = [];
+		var random_num = 12;
+		var r = parseInt(Math.random()*random_num + 1);
+		for(var i = 0; i < random_num; i++){
+			var flag = 0;
+			do{
+				for(var j = 0; j < num_array.length; j++){
+					if(num_array[j] == r) {flag = 1; break;}
+				}
+				if(!flag) {
+					num_array[num_array.length] = r;
+				}else{
+					if(i+2 >= random_num+1) {flag = 1; break;}
+					r = parseInt(Math.random()*random_num + 1);
+				}
+			}while(!flag);
+		}
+
+		for (var i = 0; i < num_array.length; i++) {
+			var img_num = 0;
+			img_num = num_array[i];
+			if(img_num<10){img_num = "0" + img_num;}
+			var k = num_array[0];
+			if(k<10){k = "0" + k;}
+			var img_src = '<img src="pic/pic_0' + img_num + '.jpg" />';
+			$("#img_box").append(img_src).children().hide();
+			$("#show_pic").attr('src', 'pic/pic_0' + k + '.jpg');
+		};
+
+		var arr_pic_001 = ['pic_001','C','http://m.ctrip.com/webapp/activity/dest/t2597086.html','太湖','千岛湖','西湖','玄武湖'],
+			arr_pic_002 = ['pic_002','B','http://m.ctrip.com/webapp/activity/dest/t2322003.html','香港','上海','广州','深圳'],
+			arr_pic_003 = ['pic_003','A','http://m.ctrip.com/webapp/activity/dest/t2000787.html','澳门','台湾','上海','深圳'],
+			arr_pic_004 = ['pic_004','C','http://m.ctrip.com/webapp/activity/dest/t1954313.html','普吉岛','塞班岛','三亚蜈支洲岛','马来群岛'],
+			arr_pic_005 = ['pic_005','D','http://m.ctrip.com/webapp/activity/dest/t1960649.html','福建','台湾','三亚','厦门'],
+			arr_pic_006 = ['pic_006','B','http://m.ctrip.com/webapp/activity/dest/t1960661.html','山西','西安','成都','横店'],
+			arr_pic_007 = ['pic_007','C','http://m.ctrip.com/webapp/activity/dest/t1960880.html','恒山','衡山','华山','青城山'],
+			arr_pic_008 = ['pic_008','A','http://m.ctrip.com/webapp/activity/dest/t2573865.html','成都','重庆','江西','福建'],
+			arr_pic_009 = ['pic_009','B','http://m.ctrip.com/webapp/activity/dest/t1962809.html','昆明','丽江','西藏','成都'],
+			arr_pic_010 = ['pic_010','C','http://m.ctrip.com/webapp/activity/dest/t2042333.html','丽江','阳朔','漓江','长江'],
+			arr_pic_011 = ['pic_011','C','http://m.ctrip.com/webapp/activity/dest/t1953855.html','元阳梯田','紫鹊界梯田','龙脊梯田','哀牢山红河哈尼梯田'],
+			arr_pic_012 = ['pic_012','B','http://m.ctrip.com/webapp/activity/dest/t1996777.html','天山','长白山','天目山','喜马拉雅山'];
+
+		var p = 0,
+			result_flag = "";
+
+		function next() {
+			if(p>num_array.length-1){
+				$(".wrap").hide(200);
+				$(".share").show(200);
+				$(".share,title").html("游戏结束，你一共猜对了 " + right_num + " 张图片！分享给好友，一起猜猜看吧！");
+			}else{
+				var img_num = 0;
+				img_num = num_array[p];
+				if(img_num<10){img_num = "0" + img_num;}
+				$("#show_pic").attr('src', 'pic/pic_0' + img_num + '.jpg');
+				result_flag = eval('arr_pic_0' + img_num)[1];
+				$(".bg").css('background-image', 'url(pic/pic_0' + img_num + '.jpg)');
+				$(".tips").html("<em>" + (num_array.length - p) + "/" + num_array.length + "</em> 张图，猜对<em>" + right_num + "</em>张图");
+				$(".url a").html(eval('arr_pic_0' + img_num)[2]);
+				$(".url a").attr("href",eval('arr_pic_0' + img_num)[2]);
+				$("#btn_a").html(eval('arr_pic_0' + img_num)[3]);
+				$("#btn_b").html(eval('arr_pic_0' + img_num)[4]);
+				$("#btn_c").html(eval('arr_pic_0' + img_num)[5]);
+				$("#btn_d").html(eval('arr_pic_0' + img_num)[6]);
+			}
+			p++;
+			$("#img_box img:eq(" + (p - 1) + ")").show();
+		}
+
+		next();
+
+		function result_compare(rc) {
+			if (result_flag == rc) {
+				right_num++;
+			}else{
+				console.log("错了，就不给提示！ YoY");
+			}
+			next();
+		}
+
+		$("#btn_a,#btn_b,#btn_c,#btn_d").click(function(){
+			result_compare($(this).val());
+		})
+	}
+});
+</script>
 </body>
 </html>
