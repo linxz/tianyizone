@@ -234,14 +234,14 @@ $(function(){
 		$temp_y = $Yaxis_val;
 	$Xaxis.change(function() {
 		$temp_y = $("#position-y").find("option:selected").val()
-		var $bg_val = $temp_y + " " + $(this).val();
+		var $bg_val = $(this).val() + " " + $temp_y;
 		$(".box").css("background-position", $bg_val);
 		$tips.html($bg_val);
 	});
 
 	$Yaxis.change(function() {
 		$temp_x = $("#position-x").find("option:selected").val()
-		var $bg_val = $(this).val() + " " + $temp_x;
+		var $bg_val = $temp_x + " " + $(this).val();
 		$(".box").css("background-position", $bg_val);
 		$tips.html($bg_val);
 	});
