@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>background-position 单位值位置测试</title>
+<link rel="stylesheet" href="css-reset-min.css">
+<style>
+.wrap {padding: 10px;}
+.page_title {font-size: 20px;}
+.box_wrap {position: relative;width: 500px;height: 500px;margin: 30px 100px 10px;padding: 20px;}
+.tips code {color: #f32600;}
+.tips strong {color: #f00;}
+
+/* 坐标指示位置 */
+span[class^="coord"] {position: absolute;height: 18px;overflow: hidden;line-height: 18px;color: #38299d;font-size: 12px;}
+.coord_tl {top: 0;left: 20px;padding-left: 5px;border-left: 1px dashed #f00;}
+.coord_tlm {top: 0;left: 270px;padding-left: 5px;border-left: 1px dashed #f00;}
+.coord_tll {top: 0;left: 470px;padding-left: 5px;border-left: 1px dashed #f00;}
+.coord_lt {top: 70px;right: 520px;padding-right: 5px;border-top: 1px dashed #f00;}
+.coord_lm {top: 270px;right: 520px;padding-right: 5px;border-top: 1px dashed #f00;}
+.coord_l {top: 470px;right: 520px;padding-right: 5px;border-top: 1px dashed #f00;}
+
+/* 背景控制区域 */
+.show_box {width: 500px;height: 500px;overflow: hidden;border: solid #6b6b6b;border-width: 1px 0 0 1px;background: #fff url(img/gird_50x50.png) 0 0 repeat;
+}
+.box {display: block;width: 500px;height: 500px;overflow: hidden;
+	background-image: url(img/box_50x50.png);
+	background-repeat: no-repeat;
+	-webkit-transition: all 200ms linear;
+	-moz-transition: all 200ms linear;
+	-ms-transition: all 200ms linear;
+	-o-transition: all 200ms linear;
+	transition: all 200ms linear;
+}
+
+/* 坐标位置控制 */
+.ctrl_coord_number {position: absolute;top: 20px;left: 20px;}
+.ctrl_coord_number input {float: left;width: 50px;height: 50px;margin: 0;opacity: 0;}
+.other_value dt {display: inline;color: #3348af;}
+.other_value dd {display: inline;}
+</style>
+<script src="jquery-2.1.1.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+	<h1 class="page_title">background-position 单位值位置测试</h1>
+	<p class="tips">当前的 <code>background-position</code> 值是： <strong>0px 0px</strong></p>
+	<div class="other_value">
+		<dl>
+			<dt>选择值：</dt>
+			<dd>X 轴：
+				<select id="position-x">
+					<option value="0">0</option>
+					<option value="10%">10%</option>
+					<option value="20%">20%</option>
+					<option value="30%">30%</option>
+					<option value="40%">40%</option>
+					<option value="50%">50%</option>
+					<option value="60%">60%</option>
+					<option value="70%">70%</option>
+					<option value="80%">80%</option>
+					<option value="90%">90%</option>
+					<option value="100%">100%</option>
+					<option value="left">left</option>
+					<option value="center">center</option>
+					<option value="right">right</option>
+				</select>
+			</dd>
+			<dd>
+				Y 轴：
+				<select id="position-y">
+					<option value="0">0</option>
+					<option value="10%">10%</option>
+					<option value="20%">20%</option>
+					<option value="30%">30%</option>
+					<option value="40%">40%</option>
+					<option value="50%">50%</option>
+					<option value="60%">60%</option>
+					<option value="70%">70%</option>
+					<option value="80%">80%</option>
+					<option value="90%">90%</option>
+					<option value="100%">100%</option>
+					<option value="top">top</option>
+					<option value="center">center</option>
+					<option value="bottom">bottom</option>
+				</select>
+			</dd>
+		</dl>
+	</div>
+	<div class="box_wrap">
+		<!-- 背景控制区域 -->
+		<div class="show_box">
+			<i class="box"></i>
+		</div>
+		<!-- 坐标显示 -->
+		<span class="coord_tl">0,0</span>
+		<span class="coord_tlm">250px,0</span>
+		<span class="coord_tll">450px,0</span>
+		<span class="coord_lt">0,50px</span>
+		<span class="coord_lm">0,250px</span>
+		<span class="coord_l">0,450px</span>
+		<div class="ctrl_coord_number">
+			<input type="radio" name="coord_number" id="coord_1">
+			<input type="radio" name="coord_number" id="coord_2">
+			<input type="radio" name="coord_number" id="coord_3">
+			<input type="radio" name="coord_number" id="coord_4">
+			<input type="radio" name="coord_number" id="coord_5">
+			<input type="radio" name="coord_number" id="coord_6" checked="checked">
+			<input type="radio" name="coord_number" id="coord_7">
+			<input type="radio" name="coord_number" id="coord_8">
+			<input type="radio" name="coord_number" id="coord_9">
+			<input type="radio" name="coord_number" id="coord_10">
+			<input type="radio" name="coord_number" id="coord_11">
+			<input type="radio" name="coord_number" id="coord_12">
+			<input type="radio" name="coord_number" id="coord_13">
+			<input type="radio" name="coord_number" id="coord_14">
+			<input type="radio" name="coord_number" id="coord_15">
+			<input type="radio" name="coord_number" id="coord_16">
+			<input type="radio" name="coord_number" id="coord_17">
+			<input type="radio" name="coord_number" id="coord_18">
+			<input type="radio" name="coord_number" id="coord_19">
+			<input type="radio" name="coord_number" id="coord_20">
+			<input type="radio" name="coord_number" id="coord_21">
+			<input type="radio" name="coord_number" id="coord_22">
+			<input type="radio" name="coord_number" id="coord_23">
+			<input type="radio" name="coord_number" id="coord_24">
+			<input type="radio" name="coord_number" id="coord_25">
+			<input type="radio" name="coord_number" id="coord_26">
+			<input type="radio" name="coord_number" id="coord_27">
+			<input type="radio" name="coord_number" id="coord_28">
+			<input type="radio" name="coord_number" id="coord_29">
+			<input type="radio" name="coord_number" id="coord_30">
+			<input type="radio" name="coord_number" id="coord_31">
+			<input type="radio" name="coord_number" id="coord_32">
+			<input type="radio" name="coord_number" id="coord_33">
+			<input type="radio" name="coord_number" id="coord_34">
+			<input type="radio" name="coord_number" id="coord_35">
+			<input type="radio" name="coord_number" id="coord_36">
+			<input type="radio" name="coord_number" id="coord_37">
+			<input type="radio" name="coord_number" id="coord_38">
+			<input type="radio" name="coord_number" id="coord_39">
+			<input type="radio" name="coord_number" id="coord_40">
+			<input type="radio" name="coord_number" id="coord_41">
+			<input type="radio" name="coord_number" id="coord_42">
+			<input type="radio" name="coord_number" id="coord_43">
+			<input type="radio" name="coord_number" id="coord_44">
+			<input type="radio" name="coord_number" id="coord_45">
+			<input type="radio" name="coord_number" id="coord_46">
+			<input type="radio" name="coord_number" id="coord_47">
+			<input type="radio" name="coord_number" id="coord_48">
+			<input type="radio" name="coord_number" id="coord_49">
+			<input type="radio" name="coord_number" id="coord_50">
+			<input type="radio" name="coord_number" id="coord_51">
+			<input type="radio" name="coord_number" id="coord_52">
+			<input type="radio" name="coord_number" id="coord_53">
+			<input type="radio" name="coord_number" id="coord_54">
+			<input type="radio" name="coord_number" id="coord_55">
+			<input type="radio" name="coord_number" id="coord_56">
+			<input type="radio" name="coord_number" id="coord_57">
+			<input type="radio" name="coord_number" id="coord_58">
+			<input type="radio" name="coord_number" id="coord_59">
+			<input type="radio" name="coord_number" id="coord_60">
+			<input type="radio" name="coord_number" id="coord_61">
+			<input type="radio" name="coord_number" id="coord_62">
+			<input type="radio" name="coord_number" id="coord_63">
+			<input type="radio" name="coord_number" id="coord_64">
+			<input type="radio" name="coord_number" id="coord_65">
+			<input type="radio" name="coord_number" id="coord_66">
+			<input type="radio" name="coord_number" id="coord_67">
+			<input type="radio" name="coord_number" id="coord_68">
+			<input type="radio" name="coord_number" id="coord_69">
+			<input type="radio" name="coord_number" id="coord_70">
+			<input type="radio" name="coord_number" id="coord_71">
+			<input type="radio" name="coord_number" id="coord_72">
+			<input type="radio" name="coord_number" id="coord_73">
+			<input type="radio" name="coord_number" id="coord_74">
+			<input type="radio" name="coord_number" id="coord_75">
+			<input type="radio" name="coord_number" id="coord_76">
+			<input type="radio" name="coord_number" id="coord_77">
+			<input type="radio" name="coord_number" id="coord_78">
+			<input type="radio" name="coord_number" id="coord_79">
+			<input type="radio" name="coord_number" id="coord_80">
+			<input type="radio" name="coord_number" id="coord_81">
+			<input type="radio" name="coord_number" id="coord_82">
+			<input type="radio" name="coord_number" id="coord_83">
+			<input type="radio" name="coord_number" id="coord_84">
+			<input type="radio" name="coord_number" id="coord_85">
+			<input type="radio" name="coord_number" id="coord_86">
+			<input type="radio" name="coord_number" id="coord_87">
+			<input type="radio" name="coord_number" id="coord_88">
+			<input type="radio" name="coord_number" id="coord_89">
+			<input type="radio" name="coord_number" id="coord_90">
+			<input type="radio" name="coord_number" id="coord_91">
+			<input type="radio" name="coord_number" id="coord_92">
+			<input type="radio" name="coord_number" id="coord_93">
+			<input type="radio" name="coord_number" id="coord_94">
+			<input type="radio" name="coord_number" id="coord_95">
+			<input type="radio" name="coord_number" id="coord_96">
+			<input type="radio" name="coord_number" id="coord_97">
+			<input type="radio" name="coord_number" id="coord_98">
+			<input type="radio" name="coord_number" id="coord_99">
+			<input type="radio" name="coord_number" id="coord_100">
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	var $number_input = $(".ctrl_coord_number input"),
+		$number_len = $number_input.length,
+		$tips = $(".tips strong"),
+		$Xaxis = $("#position-x"),
+		$Yaxis = $("#position-y"),
+		$Xaxis_val = $("#position-x").val(),
+		$Yaxis_val = $("#position-y").val();
+	var number_array = new Array();
+	var coord_x = 0, coord_y = 0, k = 0;
+	for (var i = 0; i < 10; i++) {
+		for (var j = 0; j < 10; j++) {
+			number_array[k] = j * 50 + "px " + i * 50 + "px ";
+			k++;
+		};
+	};
+	$number_input.each(function(num_index) {
+		$(this).val(number_array[num_index]);
+		$(this).click(function(){
+			if($("input:checked")) {
+				$(".box").css("background-position",$(this).val());
+				$tips.html($(this).val());
+			}
+		})
+	});
+
+	var $temp_x = $Xaxis_val,
+		$temp_y = $Yaxis_val;
+	$Xaxis.change(function() {
+		$temp_y = $("#position-y").find("option:selected").val()
+		var $bg_val = $temp_y + " " + $(this).val();
+		$(".box").css("background-position", $bg_val);
+		$tips.html($bg_val);
+	});
+
+	$Yaxis.change(function() {
+		$temp_x = $("#position-x").find("option:selected").val()
+		var $bg_val = $(this).val() + " " + $temp_x;
+		$(".box").css("background-position", $bg_val);
+		$tips.html($bg_val);
+	});
+})
+</script>
+</body>
+</html>
