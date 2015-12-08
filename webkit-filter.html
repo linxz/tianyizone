@@ -28,9 +28,9 @@ dd:last-child {overflow:hidden;padding:10px;margin:10px 0 0;font-family:Georgia;
 	<dt>blur</dt>
 	<dd><input type="range" min="0" max="50" id="blur_input_00" value="0" /><span id="blur_value"></span>px</dd>
 	<dt>brightness</dt>
-	<dd><input type="range" min="0" max="100" id="brightness_input_01" value="0" /><span id="brightness_value"></span>%</dd>
+	<dd><input type="range" min="0" max="100" id="brightness_input_01" value="100" /><span id="brightness_value"></span>%</dd>
 	<dt>contrast</dt>
-	<dd><input type="range" min="0" max="100" id="contrast_input_02" value="0" /><span id="contrast_value"></span>%</dd>
+	<dd><input type="range" min="0" max="100" id="contrast_input_02" value="100" /><span id="contrast_value"></span>%</dd>
 	<dt>grayscale</dt>
 	<dd><input type="range" min="0" max="100" id="grayscale_input_03" value="0" /><span id="grayscale_value"></span>%</dd>
 	<dt>hue-rotate</dt>
@@ -75,7 +75,7 @@ window.onload = function() {
 	var num = new Array();
 	var s_num = new Array();
 
-	for (var i=0; i<=filter_type.length; i++){
+	for (var i=0; i<filter_type.length; i++){
 		filter_value[i].innerHTML = filter_type[i].value;
 		filter_type[i].onchange = function() {
 			var filter_str = this.id.substring(-1, this.id.length - 9);
@@ -103,11 +103,11 @@ window.onload = function() {
 			num[filter_id] = this.value;
 			show_p.setAttribute("style",  "-webkit-filter:" + filter_str + "(" + this.value + dw + ")");
 
-			this.onmousedown = function() {
-				last = "";
-			}
+			// this.onmousedown = function() {
+			// 	last = "";
+			// }
 
-			this.onmouseup = function() {
+			// this.onmouseup = function() {
 				last = "";
 				for (var j=0; j<=filter_type.length; j++){
 					if (resute[j] == undefined){
@@ -115,20 +115,24 @@ window.onload = function() {
 					}
 					if (resute[j] != undefined && j>=9 && resute[j] != ""){
 						last = "drop-shadow(" + resute[9] + " " + resute[10] + " " + resute[11] + " " + "rgba(" + resute[12] + "," + resute[13] + "," + resute[14] + "," + resute[15] + ")) ";
-
-						show_p.setAttribute("style",  "-webkit-filter: " + last);
-						show_code.innerHTML = "-webkit-filter: " + last;
+						// console.log(last);
+						// show_p.setAttribute("style",  "-webkit-filter: " + last);
+						// show_code.innerHTML = "-webkit-filter: " + last;
 					}
 				}
 
 				for (var j=0; j<9; j++){
-					if (resute[j] != undefined && num[j] != 0){
+					if (resute[j] != undefined ){
 						last += resute[j] + " ";
-						show_p.setAttribute("style",  "-webkit-filter: " + last);
-						show_code.innerHTML = "-webkit-filter: " + last;
+						
+						// show_p.setAttribute("style",  "-webkit-filter: " + last);
+						// show_code.innerHTML = "-webkit-filter: " + last;
 					}
 				}
-			}
+			// }
+			// console.log(last);
+			show_p.setAttribute("style",  "-webkit-filter: " + last);
+			show_code.innerHTML = "-webkit-filter: " + last;
 		}
 	}
 
