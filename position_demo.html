@@ -19,13 +19,14 @@ input {vertical-align: 3px;}
 .code dd {color: #ff0000;}
 .show_box_wrap {float: left;width: 500px;}
 .show_box_wrap p strong {font-size: 1.2em;color:#ff0000;}
-.show_box {position: relative;width: 500px;height: 400px;overflow: auto; border: 1px dashed #a8a8a8;}
+.show_box {position: relative;width: 500px;height: 660px;overflow: auto; border: 1px dashed #a8a8a8;}
 .box_demo {width: 200px;height: 200px;}
 .box_a {background-color: #ff0000;}
 .box_b {width: 180px;height: 400px;background-color: #0bcd00}
 .box_c {width: 120px;height: 120px;background-color: #00a3ff}
 .box_d {width: 120px;height: 120px;background-color: #da00b9}
 .box_e {width: 120px;height: 120px;background-color: #fff700}
+.box_f {width: 120px;height: 120px;background-color: #fcb90e;}
 </style>
 </head>
 
@@ -42,6 +43,7 @@ input {vertical-align: 3px;}
 				<option value="box_c">box_C</option>
 				<option value="box_d">box_D</option>
 				<option value="box_e">box_E</option>
+				<option value="box_f">box_F</option>
 			</select>
 		</dd>
 		<dt>position:</dt>
@@ -79,7 +81,8 @@ input {vertical-align: 3px;}
 	<div>box_C</div>
 	<div>box_D</div>
 	<div>box_E</div>
-</div></textarea>
+</div>
+<div>box_F</div></textarea>
 	<dl class="code">
 		<dt>box_A:</dt>
 		<dd id="code_1"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></dd>
@@ -91,6 +94,8 @@ input {vertical-align: 3px;}
 		<dd id="code_4"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></dd>
 		<dt>box_E:</dt>
 		<dd id="code_5"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></dd>
+		<dt>box_F:</dt>
+		<dd id="code_6"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></dd>
 	</dl>
 </div>
 
@@ -104,6 +109,7 @@ input {vertical-align: 3px;}
 			<div class="box_demo box_d" id="box_4">box_D</div>
 			<div class="box_demo box_e" id="box_5">box_E</div>
 		</div>
+		<div class="box_demo box_f" id="box_6">box_F</div>
 	</div>
 </div>
 
@@ -113,12 +119,14 @@ var box_b = document.getElementById("box_b");
 var box_c = document.getElementById("box_c");
 var box_d = document.getElementById("box_d");
 var box_e = document.getElementById("box_e");
+var box_f = document.getElementById("box_f");
 
 var code_1 = document.getElementById("code_1");
 var code_2 = document.getElementById("code_2");
 var code_3 = document.getElementById("code_3");
 var code_4 = document.getElementById("code_4");
 var code_5 = document.getElementById("code_5");
+var code_6 = document.getElementById("code_6");
 var code_num;
 
 var box_num = document.getElementById("ctrl_box_num");
