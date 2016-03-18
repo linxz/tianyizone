@@ -5,8 +5,7 @@
 <title>页面源代码中替换 px 为 rem</title>
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, minimal-ui, shrink-to-fit=no">
 <style>
-/* Mar 18, 2016 14:15 reset */
-body, pre { margin: 0; }
+body { margin: 10px; }
 body, button, textarea { font-size: 16px; font-family: Arial, Roboto, 'Droid Sans', 'Hiragino Sans GB', 'Microsoft YaHei', 'Simsun', STXihei, 'sans-serif'; line-height: 1.5; background-color: #FFFFFF;}
 button { overflow: visible; padding: .1em .25em; cursor: pointer; }
 textarea { overflow: auto; vertical-align: text-bottom; *vertical-align: auto; border: 1px solid; resize: vertical; }
@@ -20,7 +19,10 @@ textarea { overflow: auto; vertical-align: text-bottom; *vertical-align: auto; b
 </style>
 </head>
 <body>
-<textarea id="sourceCode">body {font-size: 14px;font: normal 14px/30px Arial, Roboto, 'Droid Sans', 'Hiragino Sans GB', 'Microsoft YaHei', 'Simsun', STXihei, 'sans-serif';}
+<h1>转换 CSS 中的 px 单位为 rem</h1>
+<p>直接转换 CSS 代码中的 px 单位为 rem 单位，同时增加 html 标签中的 font-size 为 100px 来计算，并且对于其他几个分辨率做放大倍数来处理。<strong>主要作用其实就是替换 CSS 中的 px 单位为 rem 单位！</strong></p>
+<textarea id="sourceCode">/* CSS 代码示例 */
+body {font-size: 14px;font: normal 14px/30px Arial, Roboto, 'Droid Sans', 'Hiragino Sans GB', 'Microsoft YaHei', 'Simsun', STXihei, 'sans-serif';}
 p {width: 200px;height: 100px;padding: 5px;margin: -5px auto 10px;font-size: 16px;border: 1px solid #000;}
 p + p {height: 200px;padding: 20px 5px 10px 30px;border-width: 10px;}
 p:nth-of-type(3) {width: 100px;height: 50px;border: 5px solid #f00;}</textarea>
@@ -54,7 +56,7 @@ window.onload = function() {
 					return($3 + (Number($4)) + "rem/" + (Number($5)*100) + "px");
 				})
 
-		rc.innerHTML = code = "/* 默认字体大小为 100px 来计算 rem 的值 */\nhtml {font-size: 100px;}\n" + changeResulte;
+		rc.innerHTML = code = "/* 默认字体大小为 100px 来计算 rem 的值 */\nhtml {font-size: 100px;}\n/* 放大 1.1 倍的设备 */\n@media (min-width: 751px), (min-width: 376px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 320px) and (-webkit-min-device-pixel-ratio: 3) {\n\thtml {\n\t\tfont-size: 110px;\n\t}\n}\n/* 放大 1.2 倍的设备 */\n@media (min-width: 1081px), (min-width: 541px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 415px) and (-webkit-min-device-pixel-ratio: 3) {\n\thtml {\n\t\tfont-size: 120px;\n\t}\n}\n/* 以上内容是根据 html 标签的文字改变页面中元素的大小 */\n\n\n" + changeResulte;
 
 		// 以下是代码高亮部分，来源网络
 		// var code="html {font-size: 100px;}\n" + changeResulte; 
