@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>拖动玩圆角</title>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, minimal-ui, shrink-to-fit=no">
+<style>
+* {margin: 0;padding: 0;list-style: none;}
+.demo_show {
+	position: relative;
+	width: 300px;
+	height: 300px;
+	margin: 20px auto 0;
+	background-color: #dfdfdf;
+}
+.demo_show input {
+	position: absolute;
+	width: 50%;
+	height: 0;
+	border-bottom: 1px dashed #666;
+	-webkit-appearance: none;
+	outline: 0 none;
+	transition: opacity 200ms linear;
+}
+.demo_show:hover input {
+	opacity: .6;
+}
+.demo_show:hover input:hover {
+	border-bottom-color: #f00;
+	opacity: .9;
+}
+.demo_show input:nth-of-type(1) {
+	top: 0;
+	left: 0;
+}
+.demo_show input:nth-of-type(2) {
+	top: 0;
+	left: 0;
+	transform: rotateY(180deg);
+	transform-origin: right center;
+}
+.demo_show input:nth-of-type(3) {
+	top: 50%;
+    left: 50%;
+	transform: rotateY(180deg) rotateZ(90deg);
+	transform-origin: right center;
+}
+.demo_show input:nth-of-type(4) {
+	top: 100%;
+	left: 100%;
+	transform: rotateY(180deg) rotateZ(-90deg);
+	transform-origin: left center;
+}
+.demo_show input:nth-of-type(5) {
+	top: 100%;
+	left: 0;
+	transform: rotateY(180deg);
+	transform-origin: right center;
+}
+.demo_show input:nth-of-type(6) {
+	top: 100%;
+	left: 0;
+}
+.demo_show input:nth-of-type(7) {
+	top: 100%;
+	left: 0;
+	transform: rotateY(180deg) rotateZ(-90deg);
+	transform-origin: left center;
+}
+.demo_show input:nth-of-type(8) {
+	top: 50%;
+    left: -50%;
+	transform: rotateY(180deg) rotateZ(90deg);
+	transform-origin: right center;
+}
+#css_content,
+#radius_style {
+	padding-top: 20px;
+	padding-left: 20px;
+	font-size: 18px;
+	font-family: monospace;
+	line-height: 1.5;
+	color: #f00;
+}
+#css_content span,
+#radius_style span {
+	color: #666;
+}
+.btn {
+	padding: 20px 0 10px;
+	text-align: center;
+}
+#hide_range,
+#show_range {
+	width: 120px;
+	height: 40px;
+	margin: 0 10px;
+	text-align: center;
+	font-size: 15px;
+	color: #fff;
+	border: 1px solid #2161C1;
+	background-color: #3385ff;
+	cursor: pointer;
+}
+#hide_range:hover {
+	background-color: #1C53A5;
+}
+#show_range {
+	background-color: #8C4507;
+}
+#show_range:hover {
+	background-color: #B96115;
+}
+</style>
+</head>
+<body>
+<div class="demo_show" id="demo_show">
+	<input type="range" min="0" max="150" step="1" value="0" id="i0">
+	<input type="range" min="0" max="150" step="1" value="0" id="i1">
+	<input type="range" min="0" max="150" step="1" value="0" id="i2">
+	<input type="range" min="0" max="150" step="1" value="0" id="i3">
+	<input type="range" min="0" max="150" step="1" value="0" id="i4">
+	<input type="range" min="0" max="150" step="1" value="0" id="i5">
+	<input type="range" min="0" max="150" step="1" value="0" id="i6">
+	<input type="range" min="0" max="150" step="1" value="0" id="i7">
+</div>
+<div class="btn"><button type="button" id="hide_range">隐藏拖动柄</button> <button type="button" id="show_range">显示拖动柄</button></div>
+<p id="css_content"></p>
+<ul id="radius_style">
+	<li id="radius_style_tl"></li>
+	<li id="radius_style_tr"></li>
+	<li id="radius_style_br"></li>
+	<li id="radius_style_bl"></li>
+</ul>
+<script>
+window.onload = function() {
+	var ds = document.getElementById("demo_show"),
+		css_con = document.getElementById("css_content"),
+		radius_tl = document.getElementById("radius_style_tl"),
+		radius_tr = document.getElementById("radius_style_tr"),
+		radius_br = document.getElementById("radius_style_br"),
+		radius_bl = document.getElementById("radius_style_bl"),
+		hide_range = document.getElementById("hide_range"),
+		show_range = document.getElementById("show_range"),
+		borderR = new Array(),
+		i,j;
+
+	hide_range.onclick = function() {
+		for(a=0;a<ds.children.length;a++){
+			ds.children[a].style.display = "none";
+		}
+	}
+
+	show_range.onclick = function() {
+		for(a=0;a<ds.children.length;a++){
+			ds.children[a].style.display = "block";
+		}
+	}
+
+	for(i=0;i<ds.children.length;i++){
+		if(i%2){
+			ds.children[i].onchange = function() {
+				borderR[this.id.slice(1,2)] = this.value;
+				for(j=0;j<=ds.children.length;j++){
+					if(borderR[j]==undefined) borderR[j] = 0;
+					result = borderR[0] + "px " + borderR[2] + "px " + borderR[4] + "px " + borderR[6] + "px / " + borderR[7] + "px " + borderR[1] + "px " + borderR[3] + "px " + borderR[5] + "px";
+					ds.style.borderRadius = result;
+				}
+				if(borderR[0] == 0 && borderR[2] == 0 && borderR[4] == 0 && borderR[6] == 0) {
+					alert("至少先选择一下其他几个部分的圆角属性吧～");
+					result = "";
+					ds.style.borderRadius = result;
+				}
+				css_con.innerHTML = "<span>border-radius:</span> " + result;
+				radius_tl.innerHTML ="<span>border-top-left-radius:</span> " + ds.style.borderTopLeftRadius;
+				radius_tr.innerHTML ="<span>border-top-right-radius:</span> " + ds.style.borderTopRightRadius;
+				radius_br.innerHTML ="<span>border-bottom-right-radius:</span> " + ds.style.borderBottomRightRadius;
+				radius_bl.innerHTML ="<span>border-bottom-left-radius:</span> " + ds.style.borderBottomLeftRadius;
+			}
+		}else{
+			ds.children[i].onchange = function() {
+				borderR[this.id.slice(1,2)] = this.value;
+				for(j=0;j<=ds.children.length;j++){
+					if(borderR[j]==undefined) borderR[j] = 0;
+					if(borderR[1] != 0 || borderR[3] != 0 || borderR[5] != 0 || borderR[7] != 0) {
+						result = borderR[0] + "px " + borderR[2] + "px " + borderR[4] + "px " + borderR[6] + "px / " + borderR[7] + "px " + borderR[1] + "px " + borderR[3] + "px " + borderR[5] + "px";
+					}else{
+						result = borderR[0] + "px " + borderR[2] + "px " + borderR[4] + "px " + borderR[6] + "px";
+					}
+					ds.style.borderRadius = result;
+				}
+				css_con.innerHTML = "<span>border-radius:</span> " + result;
+				radius_tl.innerHTML ="<span>border-top-left-radius:</span> " + ds.style.borderTopLeftRadius;
+				radius_tr.innerHTML ="<span>border-top-right-radius:</span> " + ds.style.borderTopRightRadius;
+				radius_br.innerHTML ="<span>border-bottom-right-radius:</span> " + ds.style.borderBottomRightRadius;
+				radius_bl.innerHTML ="<span>border-bottom-left-radius:</span> " + ds.style.borderBottomLeftRadius;
+			}
+		}
+	}
+}
+</script>
+</body>
+</html>
