@@ -122,6 +122,17 @@
 	padding: 350px 0 10px;
 	text-align: center;
 }
+.btn label {
+	font-size: 18px;
+	font-weight: bold;
+	font-family: monospace;
+}
+.btn label input {
+	width: 80px;
+	height: 24px;
+	margin-right: 5px;
+	line-height: 24;
+}
 #hide_range,
 #show_range {
 	width: 120px;
@@ -162,7 +173,7 @@
 	<input type="range" min="0" max="300" step="1" value="0" id="i6">
 	<input type="range" min="0" max="300" step="1" value="0" id="i7">
 </div>
-<div class="btn"><button type="button" id="hide_range">隐藏拖动柄</button> <button type="button" id="show_range">显示拖动柄</button></div>
+<div class="btn" id="btn"><button type="button" id="hide_range">隐藏拖动柄</button> <button type="button" id="show_range">显示拖动柄</button> <label for="canvas_w">width: <input type="number" id="canvas_w" min="300" step="10" value="300"></label> <label for="canvas_h">height: <input type="number" id="canvas_h" min="300" step="10" value="300"></label></div>
 <p id="css_content"></p>
 <ul id="radius_style">
 	<li id="radius_style_tl"></li>
@@ -181,8 +192,37 @@ window.onload = function() {
 		hide_range = document.getElementById("hide_range"),
 		show_range = document.getElementById("show_range"),
 		ctrl_bar = document.getElementById("ctrl_bar"),
+		cw = document.getElementById("canvas_w"),
+		ch = document.getElementById("canvas_h"),
+		btn_box = document.getElementById("btn"),
 		borderR = new Array(),
 		i,j;
+
+	cw.onchange = function() {
+		ctrl_bar.style.width = this.value + "px";
+		ctrl_bar.style.marginLeft = -this.value/2 + "px";
+		ds.style.width = this.value + "px";
+		ds.style.marginLeft = -this.value/2 + "px";
+		ds.children[1].max = this.value;
+		ds.children[4].max = this.value;
+		ds.children[5].max = this.value;
+		ds.children[0].max = this.value;
+	}
+	ch.onchange = function() {
+		ctrl_bar.style.height = this.value + "px";
+		ds.style.height = this.value + "px";
+		ds.children[7].max = this.value;
+		ds.children[2].max = this.value;
+		ds.children[3].max = this.value;
+		ds.children[6].max = this.value;
+		ds.children[2].style.width = this.value + "px";
+		ds.children[2].style.left = cw.value - this.value + "px";
+		ds.children[3].style.width = this.value + "px";
+		ds.children[6].style.width = this.value + "px";
+		ds.children[7].style.width = this.value + "px";
+		ds.children[7].style.left = -this.value + "px";
+		btn_box.style.paddingTop = parseInt(this.value) + 50 + "px";
+	}
 
 	for(k=0;k<ctrl_bar.children.length;k++){
 		ctrl_bar.children[k].onclick = function() {
