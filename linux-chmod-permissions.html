@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>linux 文件权限字符表示&amp;数字表示</title>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, minimal-ui, shrink-to-fit=no">
+<script src="jquery-2.1.1.min.js"></script>
+<style>
+body { line-height: 1.5; background-color: #FFFFFF; }
+body, input { font-family: Arial, Roboto, 'Droid Sans', 'Hiragino Sans GB', 'Microsoft YaHei', 'Simsun', STXihei, 'sans-serif'; }
+table {width: 450px;margin: 50px auto 0;border: 1px solid #ccc;border-spacing: 0;border-collapse: collapse;}
+td, th, caption {height: 30px;text-align: left; padding: 5px 10px;border: 1px solid #ccc;}
+caption {text-align: center;font-size: 20px;color: #f32600;line-height: 32px;border-bottom: 0 none;}
+th+td,
+td+td,
+th+th {text-align: center;}
+input {height: 100%;width: 100%;}
+input[type="checkbox"] {cursor: pointer;}
+strong {overflow: hidden;margin-right: 10px;font-size: 0;}
+strong span {padding: 0 1px;color: #f32600;font-size: 20px;}
+input[type="number"] {-webkit-appearance: none;border: 1px solid #ccc;font-size: 18px;color: #2196f3;text-align: center;}
+input[type="number"]::-webkit-inner-spin-button {display: none;}
+</style>
+</head>
+<body>
+<table>
+	<caption>linux 文件权限字符表示&amp;数字表示</caption>
+	<thead>
+		<tr>
+			<th></th>
+			<th width="50">R</th>
+			<th width="50">W</th>
+			<th width="50">X</th>
+			<th width="50">数字</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td colspan="5">文件权限为： <strong id="char"><span class="p1">-</span>
+			<span class="p2">-</span>
+			<span class="p3">-</span>
+			<span class="p4">-</span>
+			<span class="p5">-</span>
+			<span class="p6">-</span>
+			<span class="p7">-</span>
+			<span class="p8">-</span>
+			<span class="p9">-</span></strong> 数字表示为： <strong id="number"><span class="number1">0</span>
+			<span class="number2">0</span>
+			<span class="number3">0</span></strong></td>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr id="user">
+			<th>文件所有者</th>
+			<td><input type="checkbox" name="user" value="0"></td>
+			<td><input type="checkbox" name="user" value="0"></td>
+			<td><input type="checkbox" name="user" value="0"></td>
+			<td><input type="number" id="num1" step="1" min="0" max="7" value="0" readonly=""></td>
+		</tr>
+		<tr id="group">
+			<th>文件所属组用户</th>
+			<td><input type="checkbox" name="group" value="0"></td>
+			<td><input type="checkbox" name="group" value="0"></td>
+			<td><input type="checkbox" name="group" value="0"></td>
+			<td><input type="number" id="num2" step="1" min="0" max="7" value="0" readonly=""></td>
+		</tr>
+		<tr id="other">
+			<th>其他用户</th>
+			<td><input type="checkbox" name="other" value="0"></td>
+			<td><input type="checkbox" name="other" value="0"></td>
+			<td><input type="checkbox" name="other" value="0"></td>
+			<td><input type="number" id="num3" step="1" min="0" max="7" value="0" readonly=""></td>
+		</tr>
+	</tbody>
+</table>
+<script>
+$(function(){
+	$("tr input[type='checkbox']").change(function(){
+		var pd = $(this).parent().parent().attr("id"),
+			pi = $(this).parent().index(),
+			un = 0,
+			gn = 0,
+			on = 0;
+		if(this.checked == true) {
+			if(pd == "user"){
+				if(pi == 1) {
+					$(this).val(4);
+					$('.p1').html("r");
+				}
+				if(pi == 2) {
+					$(this).val(2);
+					$('.p2').html("w");
+				}
+				if(pi == 3) {
+					$(this).val(1);
+					$('.p3').html("x");
+				}
+				for(i=0;i<3;i++){
+					un += Number($(this).parent().parent().children().children()[i].value)
+				}
+				$("#num1").val(Number(un));
+				$(".number1").html(Number(un));
+			}
+			if(pd == "group"){
+				if(pi == 1) {
+					$(this).val(4);
+					$('.p4').html("r");
+				}
+				if(pi == 2) {
+					$(this).val(2);
+					$('.p5').html("w");
+				}
+				if(pi == 3) {
+					$(this).val(1);
+					$('.p6').html("x");
+				}
+				for(j=0;j<3;j++){
+					gn += Number($(this).parent().parent().children().children()[j].value)
+				}
+				$("#num2").val(Number(gn));
+				$(".number2").html(Number(gn));
+			}
+			if(pd == "other"){
+				if(pi == 1) {
+					$(this).val(4);
+					$('.p7').html("r");
+				}
+				if(pi == 2) {
+					$(this).val(2);
+					$('.p8').html("w");
+				}
+				if(pi == 3) {
+					$(this).val(1);
+					$('.p9').html("x");
+				}
+				for(k=0;k<3;k++){
+					on += Number($(this).parent().parent().children().children()[k].value)
+				}
+				$("#num3").val(Number(on));
+				$(".number3").html(Number(on));
+			}
+		}else{
+			if(pd == "user"){
+				if(pi == 1) {
+					$('.p1').html("-");
+				}
+				if(pi == 2) {
+					$('.p2').html("-");
+				}
+				if(pi == 3) {
+					$('.p3').html("-");
+				}
+				this.value = 0;
+				for(i=0;i<3;i++){
+					un += Number($(this).parent().parent().children().children()[i].value)
+				}
+				$("#num1").val(Number(un));
+				$(".number1").html(Number(un));
+			}
+			if(pd == "group"){
+				if(pi == 1) {
+					$('.p4').html("-");
+				}
+				if(pi == 2) {
+					$('.p5').html("-");
+				}
+				if(pi == 3) {
+					$('.p6').html("-");
+				}
+				this.value = 0;
+				for(j=0;j<3;j++){
+					gn += Number($(this).parent().parent().children().children()[j].value)
+				}
+				$("#num2").val(Number(gn));
+				$(".number2").html(Number(gn));
+			}
+			if(pd == "other"){
+				if(pi == 1) {
+					$('.p7').html("-");
+				}
+				if(pi == 2) {
+					$('.p8').html("-");
+				}
+				if(pi == 3) {
+					$('.p9').html("-");
+				}
+				this.value = 0;
+				for(k=0;k<3;k++){
+					on += Number($(this).parent().parent().children().children()[k].value)
+				}
+				$("#num3").val(Number(on));
+				$(".number3").html(Number(on));
+			}
+		}
+	})
+})
+</script>
+</body>
+</html>
