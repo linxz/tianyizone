@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, minimal-ui, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>自由变化的 flex 布局</title>
+  <style>
+  .pages {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 10px;
+    background-color: #dedede;
+  }
+  .header {
+    order: 1;
+    flex: 1 1 100%;
+    height: 90px;
+    overflow: hidden;
+    background-color: #6d9ef8;
+  }
+  .main {
+    order: 1;
+    flex: 1 1 auto;
+    min-height: 200px;
+    background-color: #f87851;
+  }
+  .side {
+    order: 2;
+    flex: 0 0 25%;
+    background-color: #c6fc32;
+  }
+  .extend {
+    order: 3;
+    flex: 0 0 200px;
+    background-color: #e262f3;
+  }
+  .footer {
+    order: 4;
+    flex: 1 1 100%;
+    height: 100px;
+    overflow: hidden;
+    background-color: #fcff62;
+  }
+  .pages div input {
+    width: 25px;
+    text-align: center;
+  }
+  .pages div input:nth-child(3) {
+    width: 50px;
+  }
+  </style>
+</head>
+<body>
+  <fieldset>
+    <legend>外层 div 父级元素的 flex 样式</legend>
+    <select id="fatherFw">
+      <option value="wrap">flex-wrap: wrap;</option>
+      <option value="wrap-reverse">flex-wrap: wrap-reverse;</option>
+      <option value="nowrap">flex-wrap: nowrap;</option>
+    </select>
+    <select id="fatherFd">
+      <option value="row">flex-direction: row;</option>
+      <option value="row-reverse">flex-direction: row-reverse;</option>
+      <option value="column">flex-direction: column;</option>
+      <option value="column-reverse">flex-direction: column-reverse;</option>
+    </select>
+  </fieldset>
+  
+  <div class="pages" id="pages">
+    <header class="header" id="header">头部<br>
+      <div>order: <input type="number" min="0" step="1" value="1" id="h-order" /></div>
+      <div>flex: <input type="number" min="0" step="1" value="1" id="h-fg" /> <input type="number" min="0" step="1" value="1" id="h-fs" /> <input type="text" value="100%" id="h-fb" /></div>
+    </header>
+    <main class="main" id="main">主体部分<br>
+      <div>order: <input type="number" min="0" step="1" value="1" id="m-order" /></div>
+      <div>flex: <input type="number" min="0" step="1" value="1" id="m-fg" /> <input type="number" min="0" step="1" value="1" id="m-fs" /> <input type="text" value="auto" id="m-fb" /></div>
+    </main>
+    <aside class="side" id="side">侧边<br>
+      <div>order: <input type="number" min="0" step="1" value="2" id="s-order" /></div>
+      <div>flex: <input type="number" min="0" step="1" value="0" id="s-fg" /> <input type="number" min="0" step="1" value="0" id="s-fs" /> <input type="text" value="25%" id="s-fb" /></div>
+    </aside>
+    <aside class="extend" id="extend">扩展区域<br>
+      <div>order: <input type="number" min="0" step="1" value="3" id="e-order" /></div>
+      <div>flex: <input type="number" min="0" step="1" value="0" id="e-fg" /> <input type="number" min="0" step="1" value="0" id="e-fs" /> <input type="text" value="200px" id="e-fb" /></div>
+    </aside>
+    <footer class="footer" id="footer">底部<br>
+      <div>order: <input type="number" min="0" step="1" value="4" id="f-order" /></div>
+      <div>flex: <input type="number" min="0" step="1" value="1" id="f-fg" /> <input type="number" min="0" step="1" value="1" id="f-fs" /> <input type="text" value="100%" id="f-fb" /></div>
+    </footer>
+  </div>
+  <script>
+  window.onload = function(){
+    function $(id) {
+      return document.getElementById(id);
+    }
+
+    $("fatherFw").onchange = function(){
+      $("pages").style.flexWrap = this.value;
+    }
+    $("fatherFd").onchange = function(){
+      $("pages").style.flexDirection = this.value;
+    }
+
+    $("h-order").onchange = function(){
+      $("header").style.order = this.value;
+    }
+    $("h-fg").onchange = function(){
+      $("header").style.flexGrow = this.value;
+    }
+    $("h-fs").onchange = function(){
+      $("header").style.flexShrink = this.value;
+    }
+    $("h-fb").onchange = function(){
+      $("header").style.flexBasis = this.value;
+    }
+
+    $("m-order").onchange = function(){
+      $("main").style.order = this.value;
+    }
+    $("m-fg").onchange = function(){
+      $("main").style.flexGrow = this.value;
+    }
+    $("m-fs").onchange = function(){
+      $("main").style.flexShrink = this.value;
+    }
+    $("m-fb").onchange = function(){
+      $("main").style.flexBasis = this.value;
+    }
+
+    $("s-order").onchange = function(){
+      $("side").style.order = this.value;
+    }
+    $("s-fg").onchange = function(){
+      $("side").style.flexGrow = this.value;
+    }
+    $("s-fs").onchange = function(){
+      $("side").style.flexShrink = this.value;
+    }
+    $("s-fb").onchange = function(){
+      $("side").style.flexBasis = this.value;
+    }
+
+    $("e-order").onchange = function(){
+      $("extend").style.order = this.value;
+    }
+    $("e-fg").onchange = function(){
+      $("extend").style.flexGrow = this.value;
+    }
+    $("e-fs").onchange = function(){
+      $("extend").style.flexShrink = this.value;
+    }
+    $("e-fb").onchange = function(){
+      $("extend").style.flexBasis = this.value;
+    }
+
+    $("f-order").onchange = function(){
+      $("footer").style.order = this.value;
+    }
+    $("f-fg").onchange = function(){
+      $("footer").style.flexGrow = this.value;
+    }
+    $("f-fs").onchange = function(){
+      $("footer").style.flexShrink = this.value;
+    }
+    $("f-fb").onchange = function(){
+      $("footer").style.flexBasis = this.value;
+    }
+  }
+  </script>
+</body>
+</html>
