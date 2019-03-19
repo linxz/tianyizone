@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, minimal-ui, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>选择符结构树</title>
+<style>
+
+* {padding: 0;margin: 0;}
+body {
+  padding: 20px;
+  font-size: 16px;
+  font-family: 'PT Mono', Arial, Roboto, 'Droid Sans', 'Hiragino Sans GB', 'Microsoft YaHei', 'Simsun', STXihei, 'sans-serif';
+  background-color: #fff;
+}
+.a,
+.b,
+.b1,
+.c,
+.c1,
+.c1_1,
+.c1_1_1,
+.c1_1_2,
+.c1_1_3,
+.c1_1_4,
+.c2,
+.c3,
+.c3_1,
+.d,
+.d1,
+.d1_1,
+.d1_2 {
+  position: absolute;
+  top: 50px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  z-index: -1;
+  transition: all 500ms linear;
+  background-color: rgb(221, 247, 221);
+}
+.a {
+  top: 5px;
+  left: 10px;
+}
+.b {
+  top: 5px;
+  left: 107px;
+}
+.b1 {
+  top: 78px;
+  left: 0;
+}
+.c {
+  top: 5px;
+  left: 249px;
+}
+.c1 {
+  top: 78px;
+  left: -71px;
+}
+.c1_1 {
+  top: 95px;
+  left: 0;
+}
+.c1_1_1 {
+  top: 98px;
+  left: -71px;
+}
+.c1_1_2 {
+  top: 98px;
+  left: 0;
+}
+.c1_1_3 {
+  top: 98px;
+  left: 71px;
+}
+.c1_1_4 {
+  top: 98px;
+  left: 142px;
+}
+.c2 {
+  top: 78px;
+  left: 0;
+}
+.c3 {
+  top: 78px;
+  left: 70px;
+}
+.c3_1 {
+  top: 95px;
+  left: 1px;
+}
+.d {
+  top: 5px;
+  right: 75px;
+}
+.d1 {
+  top: 78px;
+  right: 0;
+}
+.d1_1 {
+  top: 95px;
+  right: 0;
+}
+.d1_2 {
+  top: 95px;
+  right: -67px;
+}
+
+.demo_box {
+  position: relative;
+  float: left;
+  width: 500px;
+  height: 324px;
+  overflow: hidden;
+  background: url(img/selector-tree.png) no-repeat 0 0;
+}
+.code_box {
+  width: 400px;
+  height: 500px;
+  line-height: 1.425;
+  font-size: 14px;
+  font-family: 'PT Mono', Arial, Roboto, 'Droid Sans', 'Hiragino Sans GB', 'Microsoft YaHei', 'Simsun', STXihei, 'sans-serif';
+  color: #999;
+  resize: none;
+  border: 0 none;
+  outline: 0 none;
+}
+
+.demo_style {
+  padding-bottom: 20px;
+}
+.demo_style input {
+  line-height: 1.425;
+  font-size: 16px;
+  font-family: 'PT Mono', Arial, Roboto, 'Droid Sans', 'Hiragino Sans GB', 'Microsoft YaHei', 'Simsun', STXihei, 'sans-serif';
+  color: #ff4e00;
+  border: 0 none;
+  border-bottom: 1px solid #ff4e00;
+  outline: 0 none;
+}
+.tips {
+  padding-top: 10px;
+  color: #ff4e00;
+}
+</style>
+<style id="box-style"></style>
+</head>
+<body>
+<div class="demo_style">
+  <span>.demo_box </span> <input type="text" id="getSelector"> <span> {background-color: #ff4e00;}</span>
+  <p class="tips">根据旁边的 HTML 结构输入一个选择符，查看结构变化，选中的节点是……</p>
+</div>
+<div class="demo_box">
+  <div class="a"></div>
+  <div class="b">
+    <div class="b1"></div>
+  </div>
+  <div class="c">
+    <div class="c1">
+      <div class="c1_1">
+        <div class="c1_1_1"></div>
+        <div class="c1_1_2"></div>
+        <div class="c1_1_3"></div>
+        <div class="c1_1_4"></div>
+      </div>
+    </div>
+    <div class="c2"></div>
+    <div class="c3">
+      <div class="c3_1"></div>
+    </div>
+  </div>
+  <div class="d">
+    <div class="d1">
+      <div class="d1_1"></div>
+      <div class="d1_2"></div>
+    </div>
+  </div>
+</div>
+<textarea class="code_box" cols="30" rows="10"><div class="demo_box">
+    <div class="a"></div>
+    <div class="b">
+      <div class="b1"></div>
+    </div>
+    <div class="c">
+      <div class="c1">
+        <div class="c1_1">
+          <div class="c1_1_1"></div>
+          <div class="c1_1_2"></div>
+          <div class="c1_1_3"></div>
+          <div class="c1_1_4"></div>
+        </div>
+      </div>
+      <div class="c2"></div>
+      <div class="c3">
+        <div class="c3_1"></div>
+      </div>
+    </div>
+    <div class="d">
+      <div class="d1">
+        <div class="d1_1"></div>
+        <div class="d1_2"></div>
+      </div>
+    </div>
+  </div></textarea>
+
+<script>
+  window.onload = function(){
+    function $(id) {
+      return document.getElementById(id);
+    }
+  
+    $("getSelector").onchange = function(){
+      $("box-style").innerHTML = '.demo_box ' + $("getSelector").value + " {background-color: #ff4e00;}"
+    }
+  }
+</script>
+</body>
+</html>
