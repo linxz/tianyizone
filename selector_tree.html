@@ -207,15 +207,17 @@ body {
   </div></textarea>
 
 <script>
-  window.onload = function(){
-    function $(id) {
-      return document.getElementById(id);
-    }
-  
-    $("getSelector").onchange = function(){
-      $("box-style").innerHTML = '.demo_box ' + $("getSelector").value + " {background-color: #ff4e00;}"
-    }
+(function () {
+  var $ = function (id) { return document.getElementById(id); }, a, b = $("getSelector"), c = function () {
+    $("box-style").innerHTML = '.demo_box ' + b.value + " {background-color: #ff4e00;}";
+  };
+
+  b.onchange = c;
+  b.onkeyup = function () {
+    clearTimeout(a);
+    a = setTimeout(c, 100);
   }
+})();
 </script>
 </body>
 </html>
