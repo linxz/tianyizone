@@ -132,14 +132,16 @@ body {
 .demo_style {
   padding-bottom: 20px;
 }
-.demo_style input {
+#getSelector {
   line-height: 1.425;
   font-size: 16px;
   font-family: 'PT Mono', Arial, Roboto, 'Droid Sans', 'Hiragino Sans GB', 'Microsoft YaHei', 'Simsun', STXihei, 'sans-serif';
+  vertical-align: top;
   color: #ff4e00;
   border: 0 none;
   border-bottom: 1px solid #ff4e00;
   outline: 0 none;
+  resize: none;
 }
 .tips {
   padding-top: 10px;
@@ -150,7 +152,7 @@ body {
 </head>
 <body>
 <div class="demo_style">
-  <span>.demo_box </span> <input type="text" id="getSelector"> <span> {background-color: #ff4e00;}</span>
+  <span>.demo_box </span> <textarea rows="1" id="getSelector" autofocus spellcheck="false"></textarea> <span> {background-color: #ff4e00;}</span>
   <p class="tips">根据旁边的 HTML 结构输入一个选择符，查看结构变化，选中的节点是……</p>
 </div>
 <div class="demo_box">
@@ -210,10 +212,17 @@ body {
 (function () {
   var $ = function (id) { return document.getElementById(id); }, a, b = $("getSelector"), c = function () {
     $("box-style").innerHTML = '.demo_box ' + b.value + " {background-color: #ff4e00;}";
+    if(b.value.substr(b.value.length - 1, 1) === ",") {
+      b.value += "\r.demo_box ";
+      b.style.height = b.scrollHeight + "px";
+      b.focus();
+    }
   };
 
   b.onchange = c;
   b.onkeyup = function () {
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + "px";
     clearTimeout(a);
     a = setTimeout(c, 100);
   }
