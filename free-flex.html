@@ -69,23 +69,23 @@
   </fieldset>
   
   <div class="pages" id="pages">
-    <header class="header" id="header">头部<br>
+    <header class="header" id="header">头部<span id="header_info"></span><br>
       <div>order: <input type="number" min="0" step="1" value="1" id="h-order" /></div>
       <div>flex: <input type="number" min="0" step="1" value="1" id="h-fg" /> <input type="number" min="0" step="1" value="1" id="h-fs" /> <input type="text" value="100%" id="h-fb" /></div>
     </header>
-    <main class="main" id="main">主体部分<br>
+    <main class="main" id="main">主体部分<span id="main_info"></span><br>
       <div>order: <input type="number" min="0" step="1" value="1" id="m-order" /></div>
       <div>flex: <input type="number" min="0" step="1" value="1" id="m-fg" /> <input type="number" min="0" step="1" value="1" id="m-fs" /> <input type="text" value="auto" id="m-fb" /></div>
     </main>
-    <aside class="side" id="side">侧边<br>
+    <aside class="side" id="side">侧边<span id="side_info"></span><br>
       <div>order: <input type="number" min="0" step="1" value="2" id="s-order" /></div>
       <div>flex: <input type="number" min="0" step="1" value="0" id="s-fg" /> <input type="number" min="0" step="1" value="0" id="s-fs" /> <input type="text" value="25%" id="s-fb" /></div>
     </aside>
-    <aside class="extend" id="extend">扩展区域<br>
+    <aside class="extend" id="extend">扩展区域<span id="extend_info"></span><br>
       <div>order: <input type="number" min="0" step="1" value="3" id="e-order" /></div>
       <div>flex: <input type="number" min="0" step="1" value="0" id="e-fg" /> <input type="number" min="0" step="1" value="0" id="e-fs" /> <input type="text" value="200px" id="e-fb" /></div>
     </aside>
-    <footer class="footer" id="footer">底部<br>
+    <footer class="footer" id="footer">底部<span id="footer_info"></span><br>
       <div>order: <input type="number" min="0" step="1" value="4" id="f-order" /></div>
       <div>flex: <input type="number" min="0" step="1" value="1" id="f-fg" /> <input type="number" min="0" step="1" value="1" id="f-fs" /> <input type="text" value="100%" id="f-fb" /></div>
     </footer>
@@ -94,6 +94,14 @@
   window.onload = function(){
     function $(id) {
       return document.getElementById(id);
+    }
+
+    $("pages").onclick = function() {
+      $("header_info").innerHTML = " => " + $("header").clientWidth + "px";
+      $("main_info").innerHTML = " => " + $("main").clientWidth + "px";
+      $("side_info").innerHTML = " => " + $("side").clientWidth + "px";
+      $("extend_info").innerHTML = " => " + $("extend").clientWidth + "px";
+      $("footer_info").innerHTML = " => " + $("footer").clientWidth + "px";
     }
 
     $("fatherFw").onchange = function(){
