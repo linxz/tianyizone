@@ -96,7 +96,7 @@
       return document.getElementById(id);
     }
 
-    $("pages").onclick = function() {
+    function showWidth() {
       $("header_info").innerHTML = " => " + $("header").clientWidth + "px";
       $("main_info").innerHTML = " => " + $("main").clientWidth + "px";
       $("side_info").innerHTML = " => " + $("side").clientWidth + "px";
@@ -104,11 +104,17 @@
       $("footer_info").innerHTML = " => " + $("footer").clientWidth + "px";
     }
 
+    $("pages").onclick = function() {
+      showWidth();
+    }
+
     $("fatherFw").onchange = function(){
       $("pages").style.flexWrap = this.value;
+      showWidth();
     }
     $("fatherFd").onchange = function(){
       $("pages").style.flexDirection = this.value;
+      showWidth();
     }
 
     $("h-order").onchange = function(){
