@@ -36,9 +36,9 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  z-index: -1;
   transition: all 500ms linear;
-  background-color: rgb(221, 247, 221);
+  background-color: #ffffff;
+  box-shadow: 0 0 9px 1px #b7b0b0 inset;
 }
 .a {
   top: 5px;
@@ -85,12 +85,12 @@ body {
   left: 0;
 }
 .c3 {
-  top: 78px;
+  top: 77px;
   left: 70px;
 }
 .c3_1 {
-  top: 95px;
-  left: 1px;
+  top: 96px;
+  left: 2px;
 }
 .d {
   top: 5px;
@@ -114,8 +114,28 @@ body {
   float: left;
   width: 500px;
   height: 324px;
-  overflow: hidden;
   background: url(img/selector-tree.png) no-repeat 0 0;
+}
+.demo_box *::after,
+.demo_box *::before {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #fff;
+  transition: all 500ms linear;
+}
+.demo_box *::before {
+  top: -12px;
+  left: -24px;
+  opacity: 0.2;
+}
+.demo_box *::after {
+  right: -20px;
+  bottom: -18px;
+  opacity: 0.5;
 }
 .code_box {
   width: 400px;
